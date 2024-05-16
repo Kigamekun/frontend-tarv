@@ -1,0 +1,11 @@
+curl -i -X GET "https://graph.facebook.com/v19.0/oauth/access_token?grant_type=fb_exchange_token&client_id=1311063126226028&client_secret=f1b0560b0fcd233ab83bb96303707142&fb_exchange_token=EAASoZA6vqtGwBO52JO17m5StDByZCCxouHHeZCdtKO2sS3LSOJcYih9SNNWJK9x2EVgUICe2MXWuzVdNi8FHyjWcybtNN2pNfxeFAPIvZBBCzDZA0nV5WcJKj3903PyLSA3upF5JaXce4RhKXROZCaBY5pk441EjsC3vVZACOX7GLYkUaQlIVe9mWZBBix4OsI19CtdVjoEBLa46xIcP0uEZD" 
+
+
+
+
+
+curl -i -X POST \
+  https://graph.facebook.com/v19.0/223800794152817/messages \
+  -H 'Authorization: Bearer EAASoZA6vqtGwBO3mK7uxZC74usGlCovRvxyRgjCoW34VAncjzrYHOJKFPBvcaZC2al4d8jGtjdZBPwZB8ZA6TAR7POQ8iPpJAwUWgEdHn3qoyjcq2ZAqSZC6ff4vNEWkSa0wKIIA7HvgfgVxhbDwmUQctc9WvSXQQ9SrCtZCWu12r41ZC7b7ixtJqtARPd' \
+  -H 'Content-Type: application/json' \
+  -d '{ "messaging_product": "whatsapp", "to": "62895331493506", "type": "template", "template": { "name": "hello_world", "language": { "code": "en_US" } } }'
