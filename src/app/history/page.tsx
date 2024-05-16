@@ -115,7 +115,7 @@ const History = () => {
                                 </div>
                                 <br />
                                 <>
-                                    <div className="space-y-5">
+                                    <div className="space-y-5 d">
 
                                         <div className=" w-100% mx-auto py-5 px-8">
                                             <div className="space-y-5">
