@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { decrementQuantity, emptyingCart, incrementQuantity, removeFromCart } from "@/lib/redux/cart.slice";
 import BottomNavBar from "@/app/components/bottomNavBar";
 import Countdown from "@/app/components/countdown";
+import { NextRouter } from "next/router";
 
 interface CartState {
     [x: string]: any;
@@ -124,7 +125,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     clearInterval(intervalId); // Hentikan interval jika status adalah 'settlement'
                 }
                 setIsIntervalActive(false); // Set state isIntervalActive menjadi false
-
+                var sl = params.slug;
 
                 Swal.fire({
                     icon: 'success',
@@ -139,6 +140,8 @@ export default function Page({ params }: { params: { slug: string } }) {
 
                     const raw = JSON.stringify({
                         'status_pembayaran': 'lunas',
+                        'user_anonim' : sl.replace(/-/g, ' '),
+
                         "metode_pembayaran": 'QRIS', // Menggunakan metode pembayaran yang dipilih
                         "items": cartItems.map((item: any) => ({
                             "id_barang": item.id,

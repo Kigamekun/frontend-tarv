@@ -178,7 +178,7 @@ export default function TransactionPage() {
                                                     </td>
                                                     <td className="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                         <p className="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                            {transaction.nama_user}
+                                                            {transaction.hasOwnProperty('nama_user') == '' ? transaction.user_anonim : transaction.nama_user}
                                                         </p>
                                                     </td>
                                                     <td className="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">

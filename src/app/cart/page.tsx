@@ -10,6 +10,7 @@ import { decrementQuantity, incrementQuantity, removeFromCart, emptyingCart } fr
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import { useAuth } from "@/lib/hooks/auth";
+import { Input } from "@/components/ui/input"
 
 
 interface CartState {
@@ -26,6 +27,8 @@ interface RootState {
 }
 
 const Cart = () => {
+    const [username, setUsername] = useState<string>('');
+
     const cartItems = useSelector((state: RootState) => state.cart);
     const dispatch = useDispatch();
     const [isClient, setIsClient] = useState(false)
@@ -75,9 +78,34 @@ const Cart = () => {
     const confirmPayment = () => {
         if (cartItems.length === 0) {
             Swal.fire({
+                target: document.getElementById('my_modal_1'),
+
                 icon: 'error',
                 title: 'Keranjang kosong',
             })
+            return;
+
+        }
+
+        if (selectedPayment === "") {
+            Swal.fire({
+                target: document.getElementById('my_modal_1'),
+
+                icon: 'error',
+                title: 'Pilih metode pembayaran',
+            })
+            return;
+
+        }
+
+        if (!user && username === "") {
+            Swal.fire({
+                target: document.getElementById('my_modal_1'),
+
+                icon: 'error',
+                title: 'Masukkan nama anda',
+            })
+            return;
         }
 
 
@@ -87,6 +115,7 @@ const Cart = () => {
             myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
             const raw = JSON.stringify({
                 'status_pembayaran': 'pending',
+                'user_anonim': username, // Jika user tidak login, maka akan menggunakan nama yang diinputkan pada form
                 "metode_pembayaran": selectedPayment, // Menggunakan metode pembayaran yang dipilih
                 "items": cartItems.map((item: any) => ({
                     "id_barang": item.id,
@@ -141,7 +170,7 @@ const Cart = () => {
                 timer: 1500
             })
             setTimeout(() => {
-                router.push('/home');
+                router.push('/payment/' + username.replace(/\s+/g, '-'));
             }, 1700);
         } else if (selectedPayment === "Hutang") {
             const myHeaders = new Headers();
@@ -149,6 +178,7 @@ const Cart = () => {
             myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
             const raw = JSON.stringify({
                 'status_pembayaran': 'pending',
+                'user_anonim': username, // Jika user tidak login, maka akan menggunakan nama yang diinputkan pada form
                 "metode_pembayaran": selectedPayment, // Menggunakan metode pembayaran yang dipilih
                 "items": cartItems.map((item: any) => ({
                     "id_barang": item.id,
@@ -294,6 +324,16 @@ const Cart = () => {
                                 </center>
                             </div>
                             <br />
+
+                                    {!user ? (<>
+                                        <Input type="text"
+                                    className="input input-bordered w-full " onChange={(event) => setUsername(event.target.value)}
+                                    placeholder="Masukan Nama Anda" />
+                                        </>) : (<></>)
+                                        }
+                            <br />
+
+
                             <div>
                                 <div className="grid">
                                     <div className="my-2 grid grid-rows-3 space-y-2">
@@ -334,8 +374,6 @@ const Cart = () => {
                                         </>) : (<></>)}
                                     </div>
                                 </div>
-                                <br />
-                                <br />
                                 <div className="w-full">
                                     <button type="submit"
                                         className="w-full justify-center rounded-md bg-red-600 px-3 py-1.5 font-body text-2xl font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" onClick={confirmPayment}>Beli</button>

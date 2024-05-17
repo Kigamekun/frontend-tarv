@@ -1,4 +1,4 @@
-{
+  {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/countdown.jsx", "src/lib/redux/store.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/countdown.jsx", "src/lib/redux/store.js", "src/app/cart/page.tsx"],
   "exclude": ["node_modules"]
 }

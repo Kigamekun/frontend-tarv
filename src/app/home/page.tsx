@@ -73,6 +73,15 @@ export default function Home() {
 
 
     const getFruitData = async (searchQuery: any) => {
+
+        Swal.fire({
+            title: 'Loading...',
+            text: 'Please wait while we fetch the data',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
         var res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits`, {
             params: { search: searchQuery },
             headers: {
@@ -85,6 +94,7 @@ export default function Home() {
                     setFruitData(response.data.data);
                     
                 }
+                Swal.close();
             }).catch(function (error) {
                 Swal.fire({
                     icon: 'error',
@@ -174,7 +184,7 @@ export default function Home() {
                         <br />
                         <Carousel className="w-full ">
                             <CarouselContent>
-                                <CarouselItem >
+                                {/* <CarouselItem >
                                     <div style={{ display: 'flex', 'justifyContent': 'center', margin: 'auto' }}>
                                         <img src="/static/images/banner1.png" alt="" className="rounded" />
                                     </div>
@@ -183,7 +193,7 @@ export default function Home() {
                                     <div style={{ display: 'flex', 'justifyContent': 'center', margin: 'auto' }}>
                                         <img src="/static/images/banner2.png" alt="" className="rounded" />
                                     </div>
-                                </CarouselItem>
+                                </CarouselItem> */}
                             </CarouselContent>
                             <CarouselPrevious />
                             <CarouselNext />
