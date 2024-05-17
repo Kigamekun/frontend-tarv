@@ -61,7 +61,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 }))
             });
 
-            fetch("http://localhost:4567/get-midtrans-token", {
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/get-midtrans-token`, {
                 method: "POST",
                 headers: myHeaders,
                 body: raw,
@@ -147,7 +147,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                         }))
                     });
 
-                    fetch("http://localhost:4567/pay", {
+                    fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/pay`, {
                         method: "POST",
                         headers: myHeaders,
                         body: raw,

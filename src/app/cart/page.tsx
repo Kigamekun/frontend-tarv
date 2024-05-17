@@ -94,7 +94,7 @@ const Cart = () => {
                     "total": item.price * item.quantity
                 }))
             });
-            fetch("http://localhost:4567/pay", {
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/pay`, {
                 method: "POST",
                 headers: myHeaders,
                 body: raw,
@@ -156,7 +156,7 @@ const Cart = () => {
                     "total": item.price * item.quantity
                 }))
             });
-            fetch("http://localhost:4567/pay", {
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/pay`, {
                 method: "POST",
                 headers: myHeaders,
                 body: raw,

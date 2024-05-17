@@ -74,7 +74,7 @@ const EditProfile = () => {
             "gender": gender,
         });
 
-        fetch(`http://localhost:4567/user/update/${userData?.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/user/update/${userData?.id}`, {
             method: "PUT",
             headers: myHeaders,
             body: raw,

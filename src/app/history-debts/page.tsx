@@ -109,7 +109,7 @@ const History = () => {
                 "kode_transaksi": selectedTransaction,
             });
 
-            fetch("http://localhost:4567/pay", {
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/pay`, {
                 method: "POST",
                 headers: myHeaders,
                 body: raw,
@@ -149,7 +149,7 @@ const History = () => {
                 }))
             });
 
-            fetch("http://localhost:4567/pay", {
+            fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/pay`, {
                 method: "POST",
                 headers: myHeaders,
                 body: raw,
