@@ -109,20 +109,11 @@ export default function Page({ params }: { params: { id: string } }) {
               <br />
               <div>
                 <div
-                  className="wrapper-hero"
-                  style={{ position: "relative", height: 600 }}
+                  className="wrapper-hero h-full"
+                  style={{ position: "relative"}}
                 >
                   <center>
-                    <div
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        right: 0,
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        borderRadius: 10
-                      }}
-                    >
+                    <div className="relative inset-x-0 mx-auto">
                       <img
                         src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruitData[0]?.image}
                         style={{ width: "90%", zIndex: -1, marginLeft: 10 }}
@@ -131,16 +122,9 @@ export default function Page({ params }: { params: { id: string } }) {
                       />
                     </div>
                     <div
-                      className="block  p-6 bg-white rounded-lg shadow hover:bg-gray-100 "
+                      className="block border inset-x-0 mx-auto w-4/5 relative -top-16 z-100 p-6 bg-white rounded-lg shadow hover:bg-gray-100 "
                       style={{
-                        borderRadius: 30,
-                        position: "absolute",
-                        left: 0,
-                        right: 0,
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        top: 450,
-                        width: "80%"
+                        borderRadius: 30,                                                                                                                     
                       }}
                     >
                       <h5
@@ -172,9 +156,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   </center>
                 </div>
               </div>
-              <br />
-              <br />
-              <div style={{ width: "85%", margin: "auto" }} className="text-black">
+              <div className="text-black mx-auto w-4/5">
                 <h3 className="font-bold text-lg">Deskripsi</h3>
                 <br />
                 <p>
@@ -217,7 +199,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       <button
                         type="button"
                         onClick={decreaseQuantity}
-                        className="focus:outline-none text-lg bold text-[#DC1F26] bg-white border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-4 me-2 mb-2 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
+                        className="focus:outline-none text-lg bold text-[#DC1F26] bg-white border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
                       >
                         -
                       </button>
@@ -225,7 +207,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       <button
                         onClick={increaseQuantity}
                         type="button"
-                        className="ml-1 focus:outline-none text-lg bold text-white bg-[#DC1F26] border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-4 me-2 mb-2 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
+                        className="focus:outline-none text-lg bold text-white bg-[#DC1F26] border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
                       >
                         +
                       </button>
