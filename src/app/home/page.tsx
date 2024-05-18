@@ -218,7 +218,6 @@ export default function Home() {
                                 gap: 10
                             }}
                         >
-
                             {fruitData.map((fruit) => (
                                 <>
                                     <div
@@ -241,7 +240,7 @@ export default function Home() {
 
                                         </center>
                                         <Link href={`/home/${fruit.id}`}>
-                                            <h5 className="px-5 mb-1 text-2xl font-bold tracking-tight text-gray-900 :text-white">
+                                            <h5 className="px-5 mt-5 mb-1 text-2xl font-bold tracking-tight text-gray-900 :text-white">
                                                 {fruit.name}
                                             </h5>
                                         </Link>
