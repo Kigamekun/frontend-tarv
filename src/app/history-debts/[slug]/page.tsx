@@ -102,7 +102,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                             className="grid grid-flow-row-dense grid-cols-12 grid-rows-1"
                             style={{ height: 50 }}
                         >
-                            <Link href={`/history`} className="col-span-4 text-black font-bold">
+                            <Link href={`/history-debts`} className="col-span-4 text-black font-bold">
                                 <FaArrowLeft />
                             </Link>
                             <div className="col-span-4 text-xl text-black font-bold">

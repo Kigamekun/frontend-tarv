@@ -53,7 +53,7 @@ export default function Page() {
                             Selamat Datang di Toko Buah Mira !
                         </h2>
                         <h3 className="mb-1 text-center text-m font-light tracking-tight text-gray-900 :text-white">
-                            Login untuk mengakses kembali Akunmu
+                            Register untuk membuat Akunmu
                         </h3>
                         <br />
                         <br />
