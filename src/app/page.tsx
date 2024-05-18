@@ -106,8 +106,8 @@ export default function Home() {
                 <div id="home" className="bg-cover bg-center h-screen relative" style={{ backgroundImage: 'url("assets/img/b1.jpg")' }}>
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white">
-                        <h1 className="text-5xl font-landing font-bold mb-6">Beli Buah Segar & Organik Hanya di Frutaria</h1>
-                        <p className="text-xl font-landing mb-6">Dapatkan buah-buahan terbaik langsung dari kebun</p>
+                        <h1 className="text-3xl px-5 lg:text-5xl font-landing font-bold mb-2 lg:mb-6">Beli Buah Segar & Organik Hanya di Frutaria</h1>
+                        <p className="text-xl px-5 font-landing mb-6">Dapatkan buah-buahan terbaik langsung dari kebun</p>
                         <div className="flex space-x-4">
                             <Link href="#belanja">
                                 <button className="bg-white hover:bg-red-500 hover:text-white text-red-500 font-landing font-semibold py-3 px-8 rounded-full transition duration-300">Belanja Sekarang</button>
