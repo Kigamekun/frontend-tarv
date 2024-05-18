@@ -106,6 +106,8 @@ const Cart = () => {
                 title: 'Masukkan nama anda',
             })
             return;
+        } else {
+            setUsername(user ? 'qris' : username);
         }
 
 

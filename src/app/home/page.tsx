@@ -184,16 +184,11 @@ export default function Home() {
                         <br />
                         <Carousel className="w-full ">
                             <CarouselContent>
-                                {/* <CarouselItem >
+                                <CarouselItem >
                                     <div style={{ display: 'flex', 'justifyContent': 'center', margin: 'auto' }}>
                                         <img src="/static/images/banner1.png" alt="" className="rounded" />
                                     </div>
                                 </CarouselItem>
-                                <CarouselItem >
-                                    <div style={{ display: 'flex', 'justifyContent': 'center', margin: 'auto' }}>
-                                        <img src="/static/images/banner2.png" alt="" className="rounded" />
-                                    </div>
-                                </CarouselItem> */}
                             </CarouselContent>
                             <CarouselPrevious />
                             <CarouselNext />
