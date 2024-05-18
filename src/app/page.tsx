@@ -7,9 +7,10 @@ import Swal from "sweetalert2";
 
 export default function Home() {
     const [fruitData, setFruitData] = useState<any[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
 
 
-    const getFruitData = async (searchQuery : any) => {
+    const getFruitData = async (searchQuery: any) => {
         var res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits`, {
             params: { search: searchQuery },
             headers: {
@@ -45,8 +46,8 @@ export default function Home() {
     useEffect(() => {
         // if (!user) return;
         getFruitData('');
-    // }, [user]);
-}, []);
+        // }, [user]);
+    }, []);
 
     return (
         <>
@@ -54,26 +55,48 @@ export default function Home() {
 
                 {/* Navbar */}
 
-                <nav className="bg-white p-4 flex justify-between items-center fixed top-0 w-full z-10 h-16">
-                    <div className="flex items-center ml-10 cursor-pointer">
+                <nav className={`bg-white ${isOpen ? "ps-4" : "p-4"} lg:p-4 flex justify-between items-center fixed top-0 w-full z-10 h-16`}>
+                    <div className="flex items-center ml-8 lg:ml-10 cursor-pointer">
                         <span className="text-red-600 text-2xl font-landing font-bold">Frutaria</span>
                     </div>
-                    <div className="flex items-center justify-between h-16">
-                        <div className="hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
+                    <div className="block lg:hidden">
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            className={`flex items-center ${isOpen ? "" : "px-4" } py-2 rounded text-black-500 hover:text-black-400`}
+                        >
+                            <svg
+                                className={`fill-current h-3 w-3 ${isOpen ? "hidden" : "block"}`}
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"
+                                style={{color: "red"}}
+                            >
+                                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                            </svg>
+                            <svg
+                                className={`fill-current h-3 w-3 ${isOpen ? "block" : "hidden"}`}
+                                viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg"                                
+                            >
+                                <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div className={`block items-center justify-between h-16 lg:flex lg:items-center lg:w-auto ${isOpen ? "block" : "hidden"}`} >
+                        <div className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
                             <a href="#home" className="text-red-600 mr-4 font-landing">Home</a>
                         </div>
-                        <div className="hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
+                        <div className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
                             <a href="#tentang" className="text-red-600 mr-4 font-landing">Tentang Kami</a>
                         </div>
-                        <div className="hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
+                        <div className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
                             <a href="#detail" className="text-red-600 mr-4 font-landing">Detail</a>
                         </div>
-                        <div className="hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
+                        <div className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
                             <a href="#belanja" className="text-red-600 mr-4 font-landing">Belanja</a>
                         </div>
-                        <Link href="/home">
+                        <Link className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center focus:font-bold hover:font-bold" href="/home">
                             <button
-                                className="ml-5 bg-white hover:bg-red-500 text-red-500 hover:text-white font-semibold py-2 px-4 border border-red-500 rounded-full">Dashboard
+                                className="bg-white hover:bg-red-500 text-red-500 hover:text-white font-semibold py-2 px-4 lg:border lg:border-red-500 lg:rounded-full">Dashboard
                             </button>
                         </Link>
                     </div>
@@ -83,8 +106,8 @@ export default function Home() {
                 <div id="home" className="bg-cover bg-center h-screen relative" style={{ backgroundImage: 'url("assets/img/b1.jpg")' }}>
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white">
-                        <h1 className="text-5xl font-landing font-bold mb-6">Beli Buah Segar & Organik Hanya di Frutaria</h1>
-                        <p className="text-xl font-landing mb-6">Dapatkan buah-buahan terbaik langsung dari kebun</p>
+                        <h1 className="text-3xl px-5 lg:text-5xl font-landing font-bold mb-2 lg:mb-6">Beli Buah Segar & Organik Hanya di Frutaria</h1>
+                        <p className="text-xl px-5 font-landing mb-6">Dapatkan buah-buahan terbaik langsung dari kebun</p>
                         <div className="flex space-x-4">
                             <Link href="#belanja">
                                 <button className="bg-white hover:bg-red-500 hover:text-white text-red-500 font-landing font-semibold py-3 px-8 rounded-full transition duration-300">Belanja Sekarang</button>
@@ -116,13 +139,13 @@ export default function Home() {
                 <section id="detail" className="py-16 bg-white">
                     <div className="container mx-auto w-11/12">
                         <h2 className="text-3xl lg:text-5xl font-landing text-center font-bold my-16"><span className="text-red-500">Detail</span></h2>
-                        {fruitData.slice(0,10).map((fruit, id) => (
-                            <div key={id} className="flex flex-col lg:flex-row items-center mb-24 bg-red-50 p-12 rounded-xl">
-                                <div className={id%2 == 0 ? "grow-0 lg:w-3/10 order-1 lg:order-2 mb-4 lg:mb-0" : "grow-0 lg:w-3/10 mb-4 lg:mb-0"}>
-                                    <img src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image} alt="Detail 1" className="h-72 w-96 object-cover rounded-xl" />
+                        {fruitData.slice(0, 10).map((fruit, id) => (
+                            <div key={id} className="flex flex-col lg:flex-row items-center mb-24 bg-red-50 p-6 lg:p-12 rounded-xl">
+                                <div className={id % 2 == 0 ? "grow-0 lg:w-3/10 order-1 lg:order-2 mb-4 lg:mb-0" : "grow-0 lg:w-3/10 mb-4 lg:mb-0"}>
+                                    <img src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image} alt="Detail 1" className="w-full lg:h-72 lg:w-96 object-cover rounded-3xl" />
                                 </div>
-                                <div className={id%2 == 0 ? "w-full lg:w-7/10 order-2 lg:order-1 lg:px-8" : "w-full lg:w-7/10 lg:px-8"}>
-                                    <h3 className={id%2 == 0 ? "text-2xl lg:text-4xl font-bold mb-8 text-center lg:text-left" : "text-2xl lg:text-4xl font-bold mb-8 text-center lg:text-right"}>Buah <span className="text-red-500">{fruit.name}</span></h3>
+                                <div className={id % 2 == 0 ? "w-full lg:w-7/10 order-2 lg:order-1 lg:px-8" : "w-full lg:w-7/10 lg:px-8"}>
+                                    <h3 className={id % 2 == 0 ? "text-2xl lg:text-4xl font-bold mb-8 text-center lg:text-left" : "text-2xl lg:text-4xl font-bold mb-8 text-center lg:text-right"}>Buah <span className="text-red-500">{fruit.name}</span></h3>
                                     <p className="text-gray-700 text-justify">
                                         {fruit.description}
                                     </p>
@@ -140,7 +163,7 @@ export default function Home() {
                         <h2 className="text-5xl font-landing font-bold mb-8 text-red-500">Belanja</h2>
 
                         <div className="slider flex flex-wrap justify-center gap-2 p-4">
-                            {fruitData.map((fruit,id) => (
+                            {fruitData.map((fruit, id) => (
                                 <div key={id}
                                     className="card w-60 p-4 bg-white rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 mb-4">
                                     <img src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image} alt="Buah 1"
@@ -221,8 +244,8 @@ export default function Home() {
                                 <span className="font-landing">Pasar Ngemplak Tulungagung</span>
                             </div>
                         </div>
-                        <div className="w-full lg:w-2/5 pl-10">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.4569673611477!2d111.8920062!3d-8.0547816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78e349cfdfe4e5%3A0x59536af26c29079b!2sPasar%20Ngemplak%20Tulungagung!5e0!3m2!1sid!2sid!4v1715670557416!5m2!1sid!2sid" width="100%" height="90%" style={{border:0}} allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                        <div className="w-full lg:w-2/5 px-5 mt-3 lg:mt-0 lg:pl-10">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.4569673611477!2d111.8920062!3d-8.0547816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78e349cfdfe4e5%3A0x59536af26c29079b!2sPasar%20Ngemplak%20Tulungagung!5e0!3m2!1sid!2sid!4v1715670557416!5m2!1sid!2sid" width="100%" height="90%" style={{ border: 0 }} allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
                 </footer>

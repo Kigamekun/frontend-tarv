@@ -123,15 +123,17 @@ const History = () => {
                                                 {historyData.map((item: any, index) => (
                                                     <div key={index} className="w-100 shadow-xl rounded-2xl flex border-2">
                                                         <div className="flex-auto p-5 align-items-center">
-                                                            <div style={{ width: '80%' }} className=" font-body text-2xl font-semibold">{item.kode_transaksi}</div>
-                                                            <br />
-                                                            <br />
-                                                            <div className="grid grid-rows-4 grid-cols-2 font-body text-gray-400">
-                                                                <div>Jumlah</div>
-                                                                <div>{item.items.length} buah</div>
-                                                                <div>Harga Total</div>
-                                                                <div>Rp. {item.total}</div>
-                                                                <div className=' flex' >
+                                                            <div className="w-full font-body text-2xl font-semibold">{item.kode_transaksi}</div>                                                                                                                        
+                                                            <div className="flex flex-col font-body text-gray-400">
+                                                                <div className='flex justify-between'>
+                                                                    <div>Jumlah</div>
+                                                                    <div>{item.items.length} buah</div>
+                                                                </div>
+                                                                <div className='flex justify-between'>
+                                                                    <div>Harga Total</div>
+                                                                    <div>Rp. {item.total}</div>
+                                                                </div>
+                                                                <div className='flex mt-5' >
                                                                     {item.status_pembayaran == 'pending' ? (
                                                                         <button className="text-white btn btn-warning">Pending</button>) :
                                                                         item.status_pembayaran == 'lunas' ? (
@@ -139,11 +141,8 @@ const History = () => {
                                                                             (<button className="text-white btn btn-danger bg-red-600">Gagal</button>)
                                                                     }
                                                                 </div>
-                                                            </div>
-                                                            <div>
-                                                                <div>
-                                                                    <Link href={`/history/${item.kode_transaksi}`}
-                                                                        className="bg-red-600 rounded-lg w-full py-1 px-2 text-white font-body font-semibold">
+                                                                <div className='flex mt-5'>
+                                                                    <Link as={"button"} className="bg-red-600 rounded-lg py-3 px-4 text-white font-body font-semibold" href={`/history/${item.kode_transaksi}`}>
                                                                         Lihat Detail
                                                                     </Link>
                                                                 </div>
