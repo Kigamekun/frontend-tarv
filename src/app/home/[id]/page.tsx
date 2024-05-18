@@ -213,7 +213,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <br />
                 <div className="flex">
                   <div className="flex-1">
-                    <div className="flex gap-4 align-items-center">
+                    <div className="flex gap-4 items-center">
                       <button
                         type="button"
                         onClick={decreaseQuantity}
