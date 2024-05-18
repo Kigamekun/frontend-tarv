@@ -74,14 +74,14 @@ export default function Home() {
 
     const getFruitData = async (searchQuery: any) => {
 
-        Swal.fire({
-            title: 'Loading...',
-            text: 'Please wait while we fetch the data',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
+        // Swal.fire({
+        //     title: 'Loading...',
+        //     text: 'Please wait while we fetch the data',
+        //     allowOutsideClick: false,
+        //     didOpen: () => {
+        //         Swal.showLoading();
+        //     }
+        // });
         var res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits`, {
             params: { search: searchQuery },
             headers: {
@@ -96,6 +96,7 @@ export default function Home() {
                 }
                 Swal.close();
             }).catch(function (error) {
+
                 Swal.fire({
                     icon: 'error',
                     title: 'error terjadi',
@@ -209,10 +210,9 @@ export default function Home() {
 
                         </div> */}
                         <br />
-                        <br />
                         <div
                         className="flex flex-wrap justify-between">
-                            {fruitData.map((fruit) => (
+                            { fruitData != undefined ? fruitData.map((fruit) => (
                                 <>
                                     <div
                                         style={{ border: "none !important" }}
@@ -262,7 +262,7 @@ export default function Home() {
                                     </div>
 
                                 </>
-                            ))}
+                            )) : <div className="text-center">Tidak Ada data</div>}
 
                         </div>
                     </div>

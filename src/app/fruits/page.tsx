@@ -79,7 +79,11 @@ export default function Home() {
             }
         })
             .then(function (response) {
-                setFruitData(response.data.data);
+                if (response.data.data != undefined) {
+                    setFruitData(response.data.data);
+
+                }
+                Swal.close();
             }).catch(function (error) {
 
                 Swal.fire({
@@ -140,7 +144,7 @@ export default function Home() {
                                             style={{ boxShadow: "0 8px 30px rgb(0,0,0,0.12)" }}
                                             type="search"
                                             id="default-search"
-                                            onKeyUp={handleSearchChange}
+                                            onChange={handleSearchChange}
                                             className="block w-full px-6 py-5 ps-14 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 :bg-gray-700 :border-gray-600 :placeholder-gray-400 :text-white :focus:ring-blue-500 :focus:border-blue-500"
                                             placeholder="Cari Items ...."
                                             required
@@ -184,7 +188,7 @@ export default function Home() {
                         <br />
                         <div
                             className="flex flex-wrap justify-between">
-                            {fruitData != undefined ? fruitData.map((fruit) => (
+                            { fruitData != undefined ? fruitData.map((fruit) => (
                                 <>
                                     <div
                                         style={{ border: "none !important" }}
@@ -232,6 +236,7 @@ export default function Home() {
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </>
                             )) : <div className="text-center">Tidak Ada data</div>}
 
