@@ -244,7 +244,7 @@ export default function Home() {
                                 <span className="font-landing">Pasar Ngemplak Tulungagung</span>
                             </div>
                         </div>
-                        <div className="w-full lg:w-2/5 pl-10">
+                        <div className="w-full lg:w-2/5 px-5 mt-3 lg:mt-0 lg:pl-10">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.4569673611477!2d111.8920062!3d-8.0547816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78e349cfdfe4e5%3A0x59536af26c29079b!2sPasar%20Ngemplak%20Tulungagung!5e0!3m2!1sid!2sid!4v1715670557416!5m2!1sid!2sid" width="100%" height="90%" style={{ border: 0 }} allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
