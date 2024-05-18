@@ -109,8 +109,8 @@ export default function Home() {
             <main className="my-0 mx-auto min-h-full max-w-screen-sm">
                 <div className="my-0 mx-auto min-h-screen max-w-480 overflow-x-hidden bg-white pb-[66px]">
                     <div className="p-4">
-                        <div className="grid grid-flow-row-dense grid-cols-7 grid-rows-1">
-                            <div className="col-span-6">
+                        <div className="flex flex-row">
+                            <div className="flex-1">
                                 <form className=" mx-auto mt-1">
                                     <label
                                         htmlFor="default-search"
@@ -151,11 +151,11 @@ export default function Home() {
                                 </form>
                             </div>
                             <div>
-                                <div className="mt-1 px-2">
+                                <div className="mt-1 ps-2">
                                     <center>
                                         <button
                                             type="button"
-                                            className="focus:outline-none text-white bg-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-6 py-5 me-2 mb-2 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
+                                            className="focus:outline-none text-white bg-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-6 py-5 mb-2 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
                                         >
                                             <Link href={'/cart'}>
                                                 <FaCartShopping className="w-6 h-5" /></Link>
