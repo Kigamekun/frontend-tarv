@@ -140,9 +140,9 @@ export default function Home() {
                     <div className="container mx-auto w-11/12">
                         <h2 className="text-3xl lg:text-5xl font-landing text-center font-bold my-16"><span className="text-red-500">Detail</span></h2>
                         {fruitData.slice(0, 10).map((fruit, id) => (
-                            <div key={id} className="flex flex-col lg:flex-row items-center mb-24 bg-red-50 p-12 rounded-xl">
+                            <div key={id} className="flex flex-col lg:flex-row items-center mb-24 bg-red-50 p-6 lg:p-12 rounded-xl">
                                 <div className={id % 2 == 0 ? "grow-0 lg:w-3/10 order-1 lg:order-2 mb-4 lg:mb-0" : "grow-0 lg:w-3/10 mb-4 lg:mb-0"}>
-                                    <img src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image} alt="Detail 1" className="h-72 w-96 object-cover rounded-xl" />
+                                    <img src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image} alt="Detail 1" className="w-full lg:h-72 lg:w-96 object-cover rounded-3xl" />
                                 </div>
                                 <div className={id % 2 == 0 ? "w-full lg:w-7/10 order-2 lg:order-1 lg:px-8" : "w-full lg:w-7/10 lg:px-8"}>
                                     <h3 className={id % 2 == 0 ? "text-2xl lg:text-4xl font-bold mb-8 text-center lg:text-left" : "text-2xl lg:text-4xl font-bold mb-8 text-center lg:text-right"}>Buah <span className="text-red-500">{fruit.name}</span></h3>
