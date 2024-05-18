@@ -56,13 +56,13 @@ export default function Home() {
                 {/* Navbar */}
 
                 <nav className={`bg-white ${isOpen ? "ps-4" : "p-4"} lg:p-4 flex justify-between items-center fixed top-0 w-full z-10 h-16`}>
-                    <div className="flex items-center ml-10 cursor-pointer">
+                    <div className="flex items-center ml-8 lg:ml-10 cursor-pointer">
                         <span className="text-red-600 text-2xl font-landing font-bold">Frutaria</span>
                     </div>
                     <div className="block lg:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="flex items-center px-3 py-2 rounded text-black-500 hover:text-black-400"
+                            className={`flex items-center ${isOpen ? "" : "px-4" } py-2 rounded text-black-500 hover:text-black-400`}
                         >
                             <svg
                                 className={`fill-current h-3 w-3 ${isOpen ? "hidden" : "block"}`}
