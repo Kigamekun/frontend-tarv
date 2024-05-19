@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { FaAppleWhole } from "react-icons/fa6";
+import { useAuth } from '@/lib/hooks/auth';
 
 const Sidebar = () => {
     // State untuk melacak halaman yang sedang aktif
@@ -10,6 +11,7 @@ const Sidebar = () => {
     const [activePage, setActivePage] = useState<string>('');
     const router = useRouter();
     const pathname = usePathname()
+    const { user, logout } = useAuth({ middleware: 'user' })
 
     useEffect(() => {
         setActivePage(pathname || 'dashboard');
@@ -33,7 +35,7 @@ const Sidebar = () => {
                         onClick={() => setActivePage('dashboard')}
                     >
                         <span className="ml-1 font-semibold transition-all duration-200 ease-nav-brand">
-                        Frutaria
+                            Frutaria
                         </span>
                     </div>
                 </a>
@@ -85,6 +87,19 @@ const Sidebar = () => {
                         activePage={activePage}
                         setActivePage={setActivePage}
                     />
+                    <li className="mt-0.5 w-full">
+                        <div
+                            className={`py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors dark:text-white dark:opacity-80}`}
+                            onClick={logout}
+                        >
+                            <div className="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                <i className={`relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2`} />
+                            </div>
+                            <span className="ml-1 duration-300 opacity-100 pointer-events-none ease">
+                                Logout
+                            </span>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </aside>

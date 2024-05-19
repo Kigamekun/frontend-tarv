@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { FaArrowLeft } from "react-icons/fa6";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { decrementQuantity, incrementQuantity, removeFromCart } from "@/lib/redux/cart.slice";
+import { addToCart, decrementQuantity, incrementQuantity, removeFromCart } from "@/lib/redux/cart.slice";
 import BottomNavBar from "@/app/components/bottomNavBar";
 
 
@@ -59,6 +59,23 @@ export default function Page({ params }: { params: { id: string } }) {
         });
       })
   }
+
+  const handleAddToCart = (fruit: any) => {
+    dispatch(addToCart({
+        id: fruit.id,
+        quantity: 1,
+        image: fruit.image,
+        name: fruit.name,
+        price: fruit.price
+    }));
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil ditaruh di keranjang',
+        showConfirmButton: false,
+        timer: 1500
+    });
+  };
 
   const increaseQuantity = () => {
     dispatch(incrementQuantity(Number(params.id)));
@@ -199,7 +216,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       <button
                         type="button"
                         onClick={decreaseQuantity}
-                        className="focus:outline-none text-lg bold text-[#DC1F26] bg-white border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
+                        className="focus:outline-none text-lg bold text-[#DC1F26] bg-white border-2 hover:bg-slate-200 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
                       >
                         -
                       </button>
@@ -207,7 +224,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       <button
                         onClick={increaseQuantity}
                         type="button"
-                        className="focus:outline-none text-lg bold text-white bg-[#DC1F26] border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
+                        className="focus:outline-none text-lg bold text-white bg-[#DC1F26] hover:bg-red-700 border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
                       >
                         +
                       </button>
@@ -218,6 +235,12 @@ export default function Page({ params }: { params: { id: string } }) {
                     <p>{fruitData[0]?.stock}</p>
                   </div>
                 </div>
+                <button
+                    type="button" onClick={() => handleAddToCart(fruitData[0])}
+                    className="text-white bg-[#DC1F26] focus:ring-4 focus:ring-blue-300 w-full mt-24 font-bold hover:bg-red-700 text-sm rounded px-2 py-1 lg:rounded-lg lg:text-lg lg:px-5 lg:py-2.5 lg:me-2 lg:mb-2"
+                >
+                    Tambah ke Keranjang
+                </button>
               </div>
               <br />
               <br />
