@@ -27,7 +27,7 @@ interface RootState {
 }
 
 const Cart = () => {
-    const [username, setUsername] = useState<string>('');
+    const [username, setUsername] = useState<string>('qris');
 
     const cartItems = useSelector((state: RootState) => state.cart);
     const dispatch = useDispatch();

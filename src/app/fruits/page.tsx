@@ -400,6 +400,7 @@ export default function Home() {
                 </dialog>
             </main>
 
+
             <BottomNavBar />
         </>
 
