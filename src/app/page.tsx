@@ -94,7 +94,7 @@ export default function Home() {
                         <div className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
                             <a href="#belanja" className="text-red-600 mr-4 font-landing">Belanja</a>
                         </div>
-                        <Link className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center focus:font-bold hover:font-bold" href="/home">
+                        <Link className="bg-white cursor-pointer h-full flex items-center focus:font-bold hover:font-bold" href="/home">
                             <button
                                 className="bg-white hover:bg-red-500 text-red-500 hover:text-white font-semibold py-2 px-4 lg:border lg:border-red-500 lg:rounded-full">Dashboard
                             </button>
