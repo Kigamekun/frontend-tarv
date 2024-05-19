@@ -126,6 +126,10 @@ const History = () => {
                                                             <div className="w-full font-body text-2xl font-semibold">{item.kode_transaksi}</div>                                                                                                                        
                                                             <div className="flex flex-col font-body text-gray-400">
                                                                 <div className='flex justify-between'>
+                                                                    <div>Tanggal Pesanan</div>
+                                                                    <div>{item.tanggal_transaksi}</div>
+                                                                </div>
+                                                                <div className='flex justify-between'>
                                                                     <div>Jumlah</div>
                                                                     <div>{item.items.length} buah</div>
                                                                 </div>
