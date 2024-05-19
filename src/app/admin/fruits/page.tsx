@@ -69,7 +69,9 @@ export default function FruitPage() {
             })
     }
 
-    const createFruit = async () => {
+    const createFruit = async (e : any) => {
+        e.preventDefault();
+
         var bodyFormData = new FormData();
         console.log(selectedFile);
         if (selectedFile) {
@@ -102,7 +104,15 @@ export default function FruitPage() {
                     image: '',
                     category_id: 0
                 })
-                setSelectedFile(undefined)
+                e.target.reset();
+
+                // close modal
+                const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
+                if (modal) {
+                    modal.close();
+                }
+
+
 
             }).catch(function (error) {
                 if (error.response && error.response.status === 401) {
@@ -128,6 +138,9 @@ export default function FruitPage() {
     }
 
     const editFruit = async (id: number) => {
+
+       
+
         let fr = fruitData.find((f) => f.id === id);
         console.log(fr)
         setFruit({
@@ -144,7 +157,10 @@ export default function FruitPage() {
     }
 
 
-    const updateFruit = async () => {
+    const updateFruit = async (e : any) => {
+
+
+        e.preventDefault();
         var bodyFormData = new FormData();
         console.log(selectedFile);
 
@@ -177,6 +193,23 @@ export default function FruitPage() {
         )
             .then(function (response) {
                 getFruitData();
+                setFruit({
+                    id: 0,
+                    name: '',
+                    stock: 0,
+                    price: 0,
+                    description: '',
+                    image: '',
+                    category_id: 0
+                })
+                e.target.reset();
+
+                // close modal
+                const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
+                if (modal) {
+                    modal.close();
+                }
+                
             }).catch(function (error) {
                 if (error.response && error.response.status === 401) {
                     Swal.fire({
@@ -262,6 +295,29 @@ export default function FruitPage() {
         }
     }
 
+    const showModalCreate = () => {
+        setFruit({
+            id: 0,
+            name: '',
+            stock: 0,
+            price: 0,
+            description: '',
+            image: '',
+            category_id: 0
+        })
+        const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
+        if (modal) {
+            modal.showModal();
+        }
+    }
+
+    const modalHide = () => {
+        const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
+        if (modal) {
+            modal.close();
+        }
+    }
+
     useEffect(() => {
         if (!user) return;
         getFruitData();
@@ -276,7 +332,7 @@ export default function FruitPage() {
                     <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                         <div className="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex justify-between">
                             <h6 className="dark:text-white">Fruits Table</h6>
-                            <button className="btn btn-info text-white" onClick={() => showModal()}>Create</button>
+                            <button className="btn btn-info text-white" onClick={() => showModalCreate()}>Create</button>
 
                         </div>
                         <div className="flex-auto px-0 pt-0 pb-2">
@@ -376,7 +432,7 @@ export default function FruitPage() {
                                             <div className="modal-box">
                                                 <h3 className="font-bold text-lg">Buat Data Buah</h3>
                                                 <div className="modal-action">
-                                                    <form method="dialog">
+                                                    <form method="dialog" onSubmit={ (fruit.id == 0) ? createFruit : updateFruit }>
 
                                                         <input className="input input-bordered w-full mt-5 " value={fruit.name} type="text" name="name" placeholder="Name" onChange={handleInputChange} />
                                                         <input className="input input-bordered w-full mt-5 " value={fruit.stock} type="text" name="stock" placeholder="Stock" onChange={handleInputChange} />
@@ -386,12 +442,11 @@ export default function FruitPage() {
                                                         <input className="file-input input-bordered w-full mt-5 " type="file" onChange={handleFileSelect} />
 
                                                         <div className="mt-5 flex justify-end gap-3">
-                                                            <button className="btn">Close</button>
-
-                                                            {fruit.id ? (
-                                                                <button className="btn btn-success text-white" onClick={updateFruit}>Update</button>
+                                                            <button className="btn" type="button" onClick={modalHide}>Close</button>
+                                                            {(fruit.id == 0) ? (
+                                                                <button type="submit" className="btn">Create</button>
                                                             ) : (
-                                                                <button className="btn btn-success text-white" onClick={createFruit}>Create</button>
+                                                                <button type="submit" className="btn">Update</button>
                                                             )}
                                                         </div>
                                                     </form>
