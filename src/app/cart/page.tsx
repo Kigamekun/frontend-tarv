@@ -125,6 +125,14 @@ const Cart = () => {
 
 
         if (selectedPayment === "CASH") {
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Mohon tunggu sebentar...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
@@ -146,6 +154,7 @@ const Cart = () => {
             })
                 .then((response) => response.text())
                 .then((result) => {
+                    Swal.close()
                     const parsedResult = JSON.parse(result);
                     if (parsedResult.status == 'success') {
                         Swal.fire({
@@ -188,6 +197,14 @@ const Cart = () => {
                 router.push('/payment/' + username.replace(/\s+/g, '-'));
             }, 1700);
         } else if (selectedPayment === "Hutang") {
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Mohon tunggu sebentar...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
@@ -209,6 +226,7 @@ const Cart = () => {
             })
                 .then((response) => response.text())
                 .then((result) => {
+                    Swal.close()
                     const parsedResult = JSON.parse(result);
                     if (parsedResult.status == 'success') {
                         Swal.fire({
