@@ -50,7 +50,7 @@ export default function Page() {
                 >
                     <div className="px-12 lg:px-5 mt-1 sm:mx-auto sm:w-full sm:max-w-sm" >
                         <h2 className="mb-1 text-center text-lg lg:text-xl font-bold tracking-tight text-gray-900 :text-white">
-                            Selamat Datang di Toko Buah Mira !
+                            Selamat Datang di Toko Buah Mira!
                         </h2>
                         <h3 className="mb-1 text-center text-m font-light tracking-tight text-gray-900 :text-white">
                             Register untuk membuat Akunmu
