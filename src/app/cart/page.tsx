@@ -53,7 +53,20 @@ const Cart = () => {
             totalItems: totalItems,
             totalPrice: totalPrice,
         })
-    }, [cartItems])
+
+        if (!isClient) {
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Please wait while we fetch the data',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        } else {
+            Swal.close();
+        }
+    }, [cartItems, isClient])
 
     const handleIncreaseQuantity = (id: number) => {
         dispatch(incrementQuantity(id));
@@ -389,7 +402,7 @@ const Cart = () => {
                         </div>
                     </dialog>
                 </main>
-            ) : 'Prerendered'}
+            ) : null}
         </>
     );
 };
