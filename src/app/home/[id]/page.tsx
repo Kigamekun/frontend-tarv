@@ -122,7 +122,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       />
                     </div>
                     <div
-                      className="block border inset-x-0 mx-auto w-4/5 relative -top-16 z-100 p-6 bg-white rounded-lg shadow hover:bg-gray-100 "
+                      className="block border inset-x-0 mx-auto w-4/5 relative -top-16 z-100 p-6 bg-white rounded-lg shadow "
                       style={{
                         borderRadius: 30,                                                                                                                     
                       }}
