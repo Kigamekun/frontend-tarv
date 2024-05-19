@@ -142,7 +142,7 @@ const History = () => {
                                                                     }
                                                                 </div>
                                                                 <div className='flex mt-5'>
-                                                                    <Link as={"button"} className="bg-red-600 rounded-lg py-3 px-4 text-white font-body font-semibold" href={`/history/${item.kode_transaksi}`}>
+                                                                    <Link className="bg-red-600 rounded-lg py-3 px-4 text-white font-body font-semibold" href={`/history/${item.kode_transaksi}`}>
                                                                         Lihat Detail
                                                                     </Link>
                                                                 </div>
