@@ -199,7 +199,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       <button
                         type="button"
                         onClick={decreaseQuantity}
-                        className="focus:outline-none text-lg bold text-[#DC1F26] bg-white border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
+                        className="focus:outline-none text-lg bold text-[#DC1F26] bg-white border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
                       >
                         -
                       </button>
@@ -207,7 +207,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       <button
                         onClick={increaseQuantity}
                         type="button"
-                        className="focus:outline-none text-lg bold text-white bg-[#DC1F26] border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
+                        className="focus:outline-none text-lg bold text-white bg-[#DC1F26] border-2 border-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-4 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
                       >
                         +
                       </button>
