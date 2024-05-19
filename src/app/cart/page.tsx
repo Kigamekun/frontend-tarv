@@ -154,9 +154,9 @@ const Cart = () => {
             })
                 .then((response) => response.text())
                 .then((result) => {
-                    Swal.close()
                     const parsedResult = JSON.parse(result);
                     if (parsedResult.status == 'success') {
+                        Swal.close()
                         Swal.fire({
                             target: document.getElementById('my_modal_1'),
                             icon: 'success',
@@ -225,10 +225,10 @@ const Cart = () => {
                 redirect: "follow"
             })
                 .then((response) => response.text())
-                .then((result) => {
-                    Swal.close()
+                .then((result) => {    
                     const parsedResult = JSON.parse(result);
                     if (parsedResult.status == 'success') {
+                        Swal.close()
                         Swal.fire({
                             target: document.getElementById('my_modal_1'),
                             icon: 'success',
