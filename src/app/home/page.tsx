@@ -74,14 +74,14 @@ export default function Home() {
 
     const getFruitData = async (searchQuery: any) => {
 
-        // Swal.fire({
-        //     title: 'Loading...',
-        //     text: 'Please wait while we fetch the data',
-        //     allowOutsideClick: false,
-        //     didOpen: () => {
-        //         Swal.showLoading();
-        //     }
-        // });
+        Swal.fire({
+            title: 'Loading...',
+            text: 'Please wait while we fetch the data',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
         var res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits`, {
             params: { search: searchQuery },
             headers: {
@@ -170,14 +170,14 @@ export default function Home() {
                             <div>
                                 <div className="mt-1 ps-2">
                                     <center>
+                                    <Link href={'/cart'}>
                                         <button
                                             type="button"
                                             className="focus:outline-none text-white bg-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-6 py-5 mb-2 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
                                         >
-                                            <Link href={'/cart'}>
-                                                <FaCartShopping className="w-6 h-5" /></Link>
-
+                                        <FaCartShopping className="w-6 h-5" />
                                         </button>
+                                    </Link>
                                     </center>
                                 </div>
                             </div>

@@ -53,7 +53,20 @@ const Cart = () => {
             totalItems: totalItems,
             totalPrice: totalPrice,
         })
-    }, [cartItems])
+
+        if (!isClient) {
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Please wait while we fetch the data',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        } else {
+            Swal.close();
+        }
+    }, [cartItems, isClient])
 
     const handleIncreaseQuantity = (id: number) => {
         dispatch(incrementQuantity(id));
@@ -112,6 +125,14 @@ const Cart = () => {
 
 
         if (selectedPayment === "CASH") {
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Mohon tunggu sebentar...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
@@ -135,6 +156,7 @@ const Cart = () => {
                 .then((result) => {
                     const parsedResult = JSON.parse(result);
                     if (parsedResult.status == 'success') {
+                        Swal.close()
                         Swal.fire({
                             target: document.getElementById('my_modal_1'),
                             icon: 'success',
@@ -175,6 +197,14 @@ const Cart = () => {
                 router.push('/payment/' + username.replace(/\s+/g, '-'));
             }, 1700);
         } else if (selectedPayment === "Hutang") {
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Mohon tunggu sebentar...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
@@ -195,9 +225,10 @@ const Cart = () => {
                 redirect: "follow"
             })
                 .then((response) => response.text())
-                .then((result) => {
+                .then((result) => {    
                     const parsedResult = JSON.parse(result);
                     if (parsedResult.status == 'success') {
+                        Swal.close()
                         Swal.fire({
                             target: document.getElementById('my_modal_1'),
                             icon: 'success',
@@ -389,7 +420,7 @@ const Cart = () => {
                         </div>
                     </dialog>
                 </main>
-            ) : 'Prerendered'}
+            ) : null}
         </>
     );
 };

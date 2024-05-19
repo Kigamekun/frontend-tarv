@@ -56,9 +56,9 @@ export default function Home() {
                 {/* Navbar */}
 
                 <nav className={`bg-white ${isOpen ? "ps-4" : "p-4"} lg:p-4 flex justify-between items-center fixed top-0 w-full z-10 h-16`}>
-                    <div className="flex items-center ml-8 lg:ml-10 cursor-pointer">
+                    <a href="#" className="flex items-center ml-8 lg:ml-10 cursor-pointer">
                         <span className="text-red-600 text-2xl font-landing font-bold">Frutaria</span>
-                    </div>
+                    </a>
                     <div className="block lg:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
@@ -94,7 +94,7 @@ export default function Home() {
                         <div className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center pl-4 focus:font-bold hover:font-bold">
                             <a href="#belanja" className="text-red-600 mr-4 font-landing">Belanja</a>
                         </div>
-                        <Link className="bg-white hover:bg-red-100 cursor-pointer h-full flex items-center focus:font-bold hover:font-bold" href="/home">
+                        <Link className="bg-white cursor-pointer h-full flex items-center focus:font-bold hover:font-bold" href="/home">
                             <button
                                 className="bg-white hover:bg-red-500 text-red-500 hover:text-white font-semibold py-2 px-4 lg:border lg:border-red-500 lg:rounded-full">Dashboard
                             </button>

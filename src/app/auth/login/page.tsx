@@ -40,16 +40,15 @@ export default function Page() {
                     style={{ display: "flex", alignItems: "center" }}
                     className=" my-0 mx-auto min-h-screen max-w-480 overflow-x-hidden bg-white flex justify-center pb-[66px]"
                 >
-                    <div className="mt-1 sm:mx-auto sm:w-full sm:max-w-sm" >
-                        <h2 className="mb-1 text-center text-xl font-bold tracking-tight text-gray-900 :text-white">
-                            Selamat Datang di Toko Buah Mira !
+                    <div className="px-12 lg:px-5 mt-1 sm:mx-auto sm:w-full sm:max-w-sm" >
+                        <h2 className="mb-1 text-center text-lg lg:text-xl font-bold tracking-tight text-gray-900 :text-white">
+                            Selamat Datang di Toko Buah Mira!
                         </h2>
                         <h3 className="mb-1 text-center text-m font-light tracking-tight text-gray-900 :text-white">
                             Login untuk mengakses kembali Akunmu
                         </h3>
-                        <br />
-                        <br />
-                        <form onSubmit={submitHandler} action="" className="space-y-2">
+                        
+                        <form onSubmit={submitHandler} action="" className="mt-10 space-y-2">
                             
                                 <Input type="text"
                                     className="input input-bordered w-full " onChange={(event) => setUsername(event.target.value)}

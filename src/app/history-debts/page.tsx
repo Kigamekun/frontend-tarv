@@ -221,7 +221,7 @@ const History = () => {
                                                             </div>
 
                                                             <div className="flex gap-2">
-                                                                <Link href={`/history/${item.kode_transaksi}`}
+                                                                <Link href={`/history-debts/${item.kode_transaksi}`}
                                                                     className="bg-red-600 rounded-lg py-1 px-2 text-white font-body font-semibold"
 
                                                                 >
