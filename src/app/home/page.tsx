@@ -225,7 +225,7 @@ export default function Home() {
                                                 <div className="w-full relative aspect-square">
                                                     <Image
                                                         fill={true}
-                                                        className="rounded-lg p-2"
+                                                        className="rounded p-2" style={{borderRadius: "20px"}}
                                                         src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image}
                                                         alt="Picture of the author"
                                                     />
