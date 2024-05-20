@@ -123,7 +123,9 @@ const History = () => {
                                                 {historyData.map((item: any, index) => (
                                                     <div key={index} className="w-100 shadow-xl rounded-2xl flex border-2">
                                                         <div className="flex-auto p-5 align-items-center">
-                                                            <div className="w-full font-body text-2xl font-semibold">{item.kode_transaksi}</div>                                                                                                                        
+                                                            <div className="w-full font-body text-2xl font-semibold">
+                                                                <span style={{width:"500px"}}>{item.kode_transaksi}</span>
+                                                                </div>                                                                                                                        
                                                             <div className="flex flex-col font-body text-gray-400">
                                                                 <div className='flex justify-between'>
                                                                     <div>Tanggal Pesanan</div>
