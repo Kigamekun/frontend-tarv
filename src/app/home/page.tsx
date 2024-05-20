@@ -74,14 +74,14 @@ export default function Home() {
 
     const getFruitData = async (searchQuery: any) => {
 
-        Swal.fire({
-            title: 'Loading...',
-            text: 'Please wait while we fetch the data',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
+        // Swal.fire({
+        //     title: 'Loading...',
+        //     text: 'Please wait while we fetch the data',
+        //     allowOutsideClick: false,
+        //     didOpen: () => {
+        //         Swal.showLoading();
+        //     }
+        // });
         var res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits`, {
             params: { search: searchQuery },
             headers: {
@@ -94,7 +94,7 @@ export default function Home() {
                     setFruitData(response.data.data);
 
                 }
-                Swal.close();
+                // Swal.close();
             }).catch(function (error) {
 
                 Swal.fire({
