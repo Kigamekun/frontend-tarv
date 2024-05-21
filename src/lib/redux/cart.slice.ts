@@ -22,7 +22,7 @@ const cartSlice = createSlice({
                 console.log('INI QUANTITY',itemExists.quantity)
                 itemExists.quantity++;
             } else {
-                state.push({ ...action.payload, quantity: 1 });
+                state.push({ ...action.payload });
             }
         },
         incrementQuantity: (state, action: { payload: number }) => {
