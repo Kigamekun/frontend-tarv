@@ -93,6 +93,8 @@ export default function Home() {
                 if (response.data.data != undefined) {
                     setFruitData(response.data.data);
 
+                } else {
+                    setFruitData([]);
                 }
                 // Swal.close();
             }).catch(function (error) {
