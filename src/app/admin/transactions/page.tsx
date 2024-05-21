@@ -21,7 +21,7 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-
+import * as XLSX from "xlsx";
 import { Input } from "@/components/ui/input"
 import {
     Table,
@@ -67,6 +67,63 @@ export default function TransactionPage() {
         image: '',
         category_id: 0
     });
+    const [loading, setLoading] = useState(false);
+    const onGetExporProduct = async (title?: string, worksheetname?: string) => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/transaction`, {
+                headers: {
+                    'content-type': 'application/json', // Change to 'application/json'
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+    
+            const transaction = await response.json();
+            let trx = transaction.data;
+    
+            // Check if the action result contains data and if it's an array
+            if (trx && Array.isArray(trx)) {
+                const dataToExport = trx.map((pro: any) => ({
+                    kode_transaksi: pro.kode_transaksi,
+                    nama_user: pro.nama_user,
+                    user_anonim: pro.user_anonim,
+                    total: pro.total,
+                    metode_pembayaran: pro.metode_pembayaran,
+                    status_pembayaran: pro.status_pembayaran,
+                    tanggal_transaksi: pro.tanggal_transaksi,
+                }));
+    
+                // Calculate the maximum width for each column
+                const getColumnWidths = (data: any[]) => {
+                    const keys = Object.keys(data[0]);
+                    const columnWidths = keys.map(key => ({
+                        wch: Math.max(...data.map(d => d[key]?.toString().length || 0), key.length) + 2
+                    }));
+                    return columnWidths;
+                };
+    
+                // Create Excel workbook and worksheet
+                const workbook = XLSX.utils.book_new();
+                const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    
+                // Set column widths
+                worksheet['!cols'] = getColumnWidths(dataToExport);
+    
+                XLSX.utils.book_append_sheet(workbook, worksheet, worksheetname);
+    
+                // Save the workbook as an Excel file
+                XLSX.writeFile(workbook, `${title}.xlsx`);
+                console.log(`Exported data to ${title}.xlsx`);
+                setLoading(false);
+            } else {
+                setLoading(false);
+                console.log("#==================Export Error");
+            }
+        } catch (error: any) {
+            setLoading(false);
+            console.log("#==================Export Error", error.message);
+        }
+    };
+    
 
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedFile(event.target.files?.[0])
@@ -192,9 +249,9 @@ export default function TransactionPage() {
                     row.original.nama_user,
                     row.original.user_anonim,
                 ].filter(Boolean).join(' ');
-    
+
                 let searchTerms = Array.isArray(filterValues) ? filterValues : [filterValues];
-    
+
                 // Check if any of the search terms are included in the userInfoString
                 return searchTerms.some(term => userInfoString.includes(term.toLowerCase()));
             },
@@ -302,7 +359,9 @@ export default function TransactionPage() {
     return (
         <>
             {user ? (
+
                 <div className="flex flex-wrap -mx-3">
+
                     <div className="flex-none w-full max-w-full px-3">
                         <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                             <div className="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex justify-between">
@@ -310,7 +369,7 @@ export default function TransactionPage() {
                             </div>
                             <div className="flex-auto px-0 pt-0 pb-2">
                                 <div className="p-5 overflow-x-auto">
-                                    <div className="flex items-end w-full py-4">
+                                    <div className="flex items-center justify-between w-full py-4">
                                         <Input
                                             placeholder="Filter nama user..."
                                             value={(table.getColumn("nama_user")?.getFilterValue() as string) ?? ""}
@@ -320,6 +379,15 @@ export default function TransactionPage() {
                                             className="max-w-sm"
                                         />
 
+                                        <button onClick={() => onGetExporProduct("Transaction", "TransactionExport")} className="btn btn-info text-white">
+                                            <span className="relative">
+                                                {loading ? "Loading..." : "Export"}
+                                            </span>
+                                            <div className="animate-shine-infinite absolute inset-0 -top-[20px] flex h-[calc(100%+40px)] w-full justify-center blur-[12px]">
+                                                <div className="relative h-full w-8 bg-white/30">
+                                                </div>
+                                            </div>
+                                        </button>
                                     </div>
                                     <div className="rounded-md border">
                                         <Table>
