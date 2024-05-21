@@ -165,9 +165,11 @@ const History = () => {
                                                 </div>
                                             </div>
                                             <div className="grid grid-rows-2 grid-cols-1 w-1/2 mx-auto gap-3 font-body">
-                                                <button className="w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-                                                    <a href="edit-profile">Edit Data</a>
-                                                </button>
+                                                <Link href={`/edit-profile`}>
+                                                    <button className="w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                                                        <a href="edit-profile">Edit Data</a>
+                                                    </button>
+                                                </Link>
                                                 <button className="w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" onClick={ logout }>
                                                     Log Out
                                                 </button>
