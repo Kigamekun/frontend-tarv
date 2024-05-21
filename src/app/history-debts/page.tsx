@@ -206,42 +206,49 @@ const History = () => {
                                         <div className=" w-100% mx-auto py-5 px-8">
                                             <div className="space-y-5">
 
-                                                {historyData.map((item: any, index) => (
+                                                {historyData && historyData.length > 0 ? (
+                                                    historyData.map((item: any, index) => (
+                                                        <div key={index} className="w-100 shadow-xl rounded-2xl flex border-2">
+                                                            <div className="flex-auto p-5 align-items-center">
+                                                                <div className="font-body text-2xl font-semibold" style={{ width: '80%' }}>{item.kode_transaksi}</div>
+                                                                <br />
+                                                                <div className="grid grid-rows-4 grid-cols-2 font-body text-gray-400">
+                                                                    <div>Tanggal Pesanan</div>
+                                                                    <div>{item.tanggal_transaksi}</div>
 
-                                                    <div key={index} className="w-100 shadow-xl rounded-2xl flex border-2">
-                                                        <div className="flex-auto p-5 align-items-center">
-                                                            <div className="font-body text-2xl font-semibold" style={{ width: '80%' }}>{item.kode_transaksi}</div>
-                                                            <br />
-                                                            <div className="grid grid-rows-4 grid-cols-2 font-body text-gray-400">
-                                                                <div>Tanggal Pesanan</div>
-                                                                <div>{item.tanggal_transaksi}</div>
+                                                                    <div>Jumlah</div>
+                                                                    <div>{item.items.length} buah</div>
 
-                                                                <div>Jumlah</div>
-                                                                <div>{item.items.length} buah</div>
+                                                                    <div>Harga Total</div>
+                                                                    <div>Rp. {item.total}</div>
+                                                                </div>
 
-                                                                <div>Harga Total</div>
-                                                                <div>Rp. {item.total}</div>
+                                                                <div className="flex gap-2">
+                                                                    <Link href={`/history-debts/${item.kode_transaksi}`}
+                                                                        className="bg-red-600 rounded-lg py-1 px-2 text-white font-body font-semibold"
+                                                                    >
+                                                                        Lihat Detail
+                                                                    </Link>
+                                                                    <button
+                                                                        type="submit"
+                                                                        onClick={(e) => showModal(item.kode_transaksi)}
+                                                                        className="bg-red-600 rounded-lg py-1 px-2 text-white font-body font-semibold"
+                                                                    >
+                                                                        Bayar
+                                                                    </button>
+                                                                </div>
                                                             </div>
-
-                                                            <div className="flex gap-2">
-                                                                <Link href={`/history-debts/${item.kode_transaksi}`}
-                                                                    className="bg-red-600 rounded-lg py-1 px-2 text-white font-body font-semibold"
-
-                                                                >
-                                                                    Lihat Detail
-                                                                </Link>
-                                                                <button
-                                                                    type="submit"
-                                                                    onClick={(e) => showModal(item.kode_transaksi)}
-                                                                    className="bg-red-600 rounded-lg py-1 px-2 text-white font-body font-semibold"
-                                                                >
-                                                                    Bayar
-                                                                </button>
-                                                            </div>
-
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="w-100 shadow-xl rounded-2xl flex border-2 p-5">
+                                                        <div className="flex-auto align-items-center">
+                                                            <div className="font-body text-2xl font-semibold text-center">No transaction history available.</div>
+                                                            <img src="static/images/empty-cart.jpg" alt="" />
                                                         </div>
                                                     </div>
-                                                ))}
+                                                )}
+
                                             </div>
                                         </div>
                                     </div>
@@ -322,7 +329,7 @@ const History = () => {
                 </>
 
 
-            ) : 'Prerendered'}
+            ) : ''}
         </>
     );
 };

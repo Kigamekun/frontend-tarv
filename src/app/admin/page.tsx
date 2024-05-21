@@ -7,7 +7,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Image from 'next/image'
 
-import { FaDownLong,FaUpLong } from "react-icons/fa6";
+import { FaDownLong, FaUpLong } from "react-icons/fa6";
 
 
 type Fruit = {
@@ -115,7 +115,22 @@ export default function AdminPage() {
     }
 
     useEffect(() => {
+        console.log(`ini token ${localStorage.getItem('token')}`)
+
+        if (localStorage.getItem('token') == null) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Anda tidak memiliki akses',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setTimeout(() => {
+                window.location.href = '/home'
+            }, 1700)
+        }
+
         if (!user) return;
+
         getUserInfo();
 
         getDashboardData();
@@ -147,7 +162,7 @@ export default function AdminPage() {
                                 <div className="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl p-4">
                                     <div className="text-center">
                                         <div className="w-16 h-16 mx-auto bg-gradient-to-tl from-red-500 to-pink-500 rounded-xl flex items-center justify-center shadow-sm">
-                                           <FaUpLong color="white" size={'30'} />
+                                            <FaUpLong color="white" size={'30'} />
                                         </div>
                                         <h6 className="mt-4 dark:text-white">Laba</h6>
                                         <hr className="my-4 h-px bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
@@ -157,7 +172,7 @@ export default function AdminPage() {
                                 <div className="bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl p-4">
                                     <div className="text-center">
                                         <div className="w-16 h-16 mx-auto bg-gradient-to-tl from-red-500 to-pink-500 rounded-xl flex items-center justify-center shadow-sm">
-                                        <FaDownLong color="white" size={'30'} />
+                                            <FaDownLong color="white" size={'30'} />
                                         </div>
                                         <h6 className="mt-4 dark:text-white">Rugi</h6>
                                         <hr className="my-4 h-px bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
@@ -267,27 +282,41 @@ export default function AdminPage() {
                             <div className="flex-auto p-4 pb-0">
                                 <ul className="flex flex-col pl-0 mb-0 rounded-lg">
                                     {
-                                        hutang.map((item, index) => {
-                                            return (
-                                                <>
+                                        hutang && hutang.length > 0 ? (
 
-                                                    <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-xl text-inherit">
-                                                        <div className="flex flex-col">
-                                                            <h6 className="mb-1 text-sm font-semibold leading-normal dark:text-white text-slate-700">
-                                                                {item.nama_user}
-                                                            </h6>
-                                                            <span className="text-xs leading-tight dark:text-white dark:opacity-80">
-                                                                {item.tanggal_transaksi}
-                                                            </span>
-                                                        </div>
-                                                        <div className="flex items-center text-sm leading-normal dark:text-white/80">
-                                                            Rp. {item.total}
 
-                                                        </div>
-                                                    </li>
-                                                </>
-                                            )
-                                        })
+                                            hutang.map((item, index) => {
+                                                return (
+                                                    <>
+
+                                                        <li className="relative flex justify-between px-4 py-2 pl-0 mb-2 border-0 rounded-xl text-inherit">
+                                                            <div className="flex flex-col">
+                                                                <h6 className="mb-1 text-sm font-semibold leading-normal dark:text-white text-slate-700">
+                                                                    {item.nama_user}
+                                                                </h6>
+                                                                <span className="text-xs leading-tight dark:text-white dark:opacity-80">
+                                                                    {item.tanggal_transaksi}
+                                                                </span>
+                                                            </div>
+                                                            <div className="flex items-center text-sm leading-normal dark:text-white/80">
+                                                                Rp. {item.total}
+
+                                                            </div>
+                                                        </li>
+                                                    </>
+                                                )
+                                            })
+                                        ) : (
+                                            <div className="w-100 shadow-xl rounded-2xl flex border-2 p-5">
+                                                <div className="flex-auto align-items-center">
+                                                    <div className="font-body text-2xl font-semibold text-center">No transaction history available.</div>
+                                                    <center>
+                                                        <img src="/static/images/empty-cart.jpg" style={{ width: '200px' }} alt="" />
+
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        )
                                     }
 
 
@@ -300,42 +329,39 @@ export default function AdminPage() {
                     <div className="w-full max-w-full px-3 mt-6 md:w-4/12 md:flex-none">
                         <div className="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                             <div className="p-6 px-4 pb-0 mb-0 border-b-0 rounded-t-2xl">
-                                <h6 className="mb-0 dark:text-white">Informasi Transaksi</h6>
+                                <h6 className="mb-0 dark:text-white">Informasi Transaksi Terkini</h6>
                             </div>
                             <div className="flex-auto p-4 pt-6">
                                 <ul className="flex flex-col pl-0 mb-0 rounded-lg">
 
-                                    {transactionData.map((item, index) => {
+                                    {transactionData.slice(0, 4).map((item, index) => {
                                         return (
-                                            <>
-                                                <li className="relative flex p-6 mt-4 mb-2 border-0 rounded-b-inherit rounded-xl bg-gray-50 dark:bg-slate-850">
-                                                    <div className="flex flex-col">
-                                                        <h6 className="mb-4 text-sm leading-normal dark:text-white">
-                                                            {item.nama_user}
-                                                        </h6>
-                                                        <span className="mb-2 text-xs leading-tight dark:text-white/80">
-                                                            Total Belanja:{" "}
-                                                            <span className="font-semibold text-slate-700 dark:text-white sm:ml-2">
-                                                                Rp. {item.total}
-                                                            </span>
+                                            <li key={index} className="relative flex p-6 mt-4 mb-2 border-0 rounded-b-inherit rounded-xl bg-gray-50 dark:bg-slate-850">
+                                                <div className="flex flex-col">
+                                                    <h6 className="mb-4 text-sm leading-normal dark:text-white">
+                                                        {item.nama_user}
+                                                    </h6>
+                                                    <span className="mb-2 text-xs leading-tight dark:text-white/80">
+                                                        Total Belanja:{" "}
+                                                        <span className="font-semibold text-slate-700 dark:text-white sm:ml-2">
+                                                            Rp. {item.total}
                                                         </span>
-                                                        <span className="mb-2 text-xs leading-tight dark:text-white/80">
-                                                            Metode Pembayaran:{" "}
-                                                            <span className="font-semibold text-slate-700 dark:text-white sm:ml-2">
-                                                                {item.metode_pembayaran}
-                                                            </span>
+                                                    </span>
+                                                    <span className="mb-2 text-xs leading-tight dark:text-white/80">
+                                                        Metode Pembayaran:{" "}
+                                                        <span className="font-semibold text-slate-700 dark:text-white sm:ml-2">
+                                                            {item.metode_pembayaran}
                                                         </span>
-                                                        <span className="text-xs leading-tight dark:text-white/80">
-                                                            Status:{" "}
-                                                            <span className="font-semibold text-slate-700 dark:text-white sm:ml-2">
-                                                                {item.status_pembayaran}
-                                                            </span>
+                                                    </span>
+                                                    <span className="text-xs leading-tight dark:text-white/80">
+                                                        Status:{" "}
+                                                        <span className="font-semibold text-slate-700 dark:text-white sm:ml-2">
+                                                            {item.status_pembayaran}
                                                         </span>
-                                                    </div>
-
-                                                </li>
-                                            </>
-                                        )
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        );
                                     })}
 
                                 </ul>

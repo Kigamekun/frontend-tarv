@@ -56,6 +56,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {/* main script file  */}
         </>
         
-        : 'Prerendered'}</h1>
+        : ''}</h1>
 
 }

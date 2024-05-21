@@ -120,42 +120,53 @@ const History = () => {
                                         <div className=" w-100% mx-auto py-5 px-8">
                                             <div className="space-y-5">
 
-                                                {historyData.map((item: any, index) => (
-                                                    <div key={index} className="w-100 shadow-xl rounded-2xl flex border-2">
-                                                        <div className="flex-auto p-5 align-items-center">
-                                                            <div className="w-full font-body text-2xl font-semibold">
-                                                                <span style={{width:"500px",display:"inline-block"}}>{item.kode_transaksi}</span>
-                                                                </div>                                                                                                                        
-                                                            <div className="flex flex-col font-body text-gray-400">
-                                                                <div className='flex justify-between'>
-                                                                    <div>Tanggal Pesanan</div>
-                                                                    <div>{item.tanggal_transaksi}</div>
+                                                {historyData && historyData.length > 0 ? (
+                                                    historyData.map((item: any, index) => (
+                                                        <div key={index} className="w-100 shadow-xl rounded-2xl flex border-2">
+                                                            <div className="flex-auto p-5 align-items-center">
+                                                                <div className="w-full font-body text-2xl font-semibold">
+                                                                    <span style={{ width: "500px", display: "inline-block" }}>{item.kode_transaksi}</span>
                                                                 </div>
-                                                                <div className='flex justify-between'>
-                                                                    <div>Jumlah</div>
-                                                                    <div>{item.items.length} buah</div>
-                                                                </div>
-                                                                <div className='flex justify-between'>
-                                                                    <div>Harga Total</div>
-                                                                    <div>Rp. {item.total}</div>
-                                                                </div>
-                                                                <div className='flex mt-5' >
-                                                                    {item.status_pembayaran == 'pending' ? (
-                                                                        <button className="text-white btn btn-warning">Pending</button>) :
-                                                                        item.status_pembayaran == 'lunas' ? (
-                                                                            <button className="text-white btn btn-success">Lunas</button>) :
-                                                                            (<button className="text-white btn btn-danger bg-red-600">Gagal</button>)
-                                                                    }
-                                                                </div>
-                                                                <div className='flex mt-5'>
-                                                                    <Link className="bg-red-600 rounded-lg py-3 px-4 text-white font-body font-semibold" href={`/history/${item.kode_transaksi}`}>
-                                                                        Lihat Detail
-                                                                    </Link>
+                                                                <div className="flex flex-col font-body text-gray-400">
+                                                                    <div className='flex justify-between'>
+                                                                        <div>Tanggal Pesanan</div>
+                                                                        <div>{item.tanggal_transaksi}</div>
+                                                                    </div>
+                                                                    <div className='flex justify-between'>
+                                                                        <div>Jumlah</div>
+                                                                        <div>{item.items.length} buah</div>
+                                                                    </div>
+                                                                    <div className='flex justify-between'>
+                                                                        <div>Harga Total</div>
+                                                                        <div>Rp. {item.total}</div>
+                                                                    </div>
+                                                                    <div className='flex mt-5' >
+                                                                        {item.status_pembayaran == 'pending' ? (
+                                                                            <button className="text-white btn btn-warning">Pending</button>) :
+                                                                            item.status_pembayaran == 'lunas' ? (
+                                                                                <button className="text-white btn btn-success">Lunas</button>) :
+                                                                                (<button className="text-white btn btn-danger bg-red-600">Gagal</button>)
+                                                                        }
+                                                                    </div>
+                                                                    <div className='flex mt-5'>
+                                                                        <Link className="bg-red-600 rounded-lg py-3 px-4 text-white font-body font-semibold" href={`/history/${item.kode_transaksi}`}>
+                                                                            Lihat Detail
+                                                                        </Link>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="w-100 shadow-xl rounded-2xl flex border-2 p-5">
+                                                        <div className="flex-auto align-items-center">
+                                                            <div className="font-body text-2xl font-semibold text-center">No transaction history available.</div>
+                                                            <img src="static/images/empty-cart.jpg" alt="" />
+                                                        </div>
                                                     </div>
-                                                ))}
+                                                )
+
+                                                }
 
                                             </div>
                                         </div>
@@ -189,7 +200,7 @@ const History = () => {
                 </>
 
 
-            ) : 'Prerendered'}
+            ) : ''}
         </>
     );
 };
