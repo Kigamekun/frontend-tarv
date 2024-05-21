@@ -9,12 +9,15 @@ const Sidebar = () => {
     // State untuk melacak halaman yang sedang aktif
 
     const [activePage, setActivePage] = useState<string>('');
+    const [breadcrumb, setBreadcrumb] = useState<string>('');
+
     const router = useRouter();
     const pathname = usePathname()
     const { user, logout } = useAuth({ middleware: 'user' })
 
     useEffect(() => {
         setActivePage(pathname || 'dashboard');
+        setBreadcrumb(pathname || 'dashboard');
         console.log(pathname)
     }, [pathname]);
 
@@ -65,6 +68,8 @@ const Sidebar = () => {
                         href="/admin/fruits"
                         activePage={activePage}
                         setActivePage={setActivePage}
+                        setBreadcrumb={setBreadcrumb}
+
                     />
                     <MenuItem
                         icon="ni ni-tv-2"
@@ -72,6 +77,7 @@ const Sidebar = () => {
                         href="/admin/transactions"
                         activePage={activePage}
                         setActivePage={setActivePage}
+                        setBreadcrumb={setBreadcrumb}
                     />
                     {/* <MenuItem
                         icon="ni ni-tv-2"
@@ -86,6 +92,8 @@ const Sidebar = () => {
                         href="/admin/debts"
                         activePage={activePage}
                         setActivePage={setActivePage}
+                        setBreadcrumb={setBreadcrumb}
+
                     />
                     <li className="mt-0.5 w-full">
                         <div
@@ -105,16 +113,17 @@ const Sidebar = () => {
         </aside>
     );
 };
-
+``
 interface MenuItemProps {
     icon: string;
     title: string;
     href: string;
     activePage: string;
     setActivePage: (page: string) => void;
+    setBreadcrumb: (page: string) => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ icon, title, href, activePage, setActivePage }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ icon, title, href, activePage, setActivePage, setBreadcrumb }) => {
     return (
         <li className="mt-0.5 w-full">
             <Link
@@ -123,7 +132,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, title, href, activePage, setA
             >
                 <div
                     className={`py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors ${activePage === href.toLowerCase() ? 'bg-blue-500/13 dark:text-white dark:opacity-80' : 'dark:text-white dark:opacity-80'}`}
-                    onClick={() => setActivePage(href.toLowerCase())}
+                    onClick={() => {
+                        setActivePage(href.toLowerCase());
+                        setBreadcrumb('ads');
+                    }
+                    }
                 >
                     <div className="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                         <i className={`relative top-0 text-sm leading-normal text-blue-500 ${icon}`} />

@@ -1,18 +1,64 @@
-'use client';
+"use client"
 
-import { useAuth } from "@/lib/hooks/auth";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import * as React from "react"
+import {
+    ColumnDef,
+    ColumnFiltersState,
+    SortingState,
+    VisibilityState,
+    flexRender,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    useReactTable,
+} from "@tanstack/react-table"
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 
-export default function FruitPage() {
+import { Button } from "@/components/ui/button"
+
+import { Input } from "@/components/ui/input"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
+import { useAuth } from "@/lib/hooks/auth"
+import axios from "axios"
+import { useRouter } from "next/navigation"
+import Swal from "sweetalert2"
+
+interface Fruit {
+    id: number;
+    name: string;
+    stock: number;
+    price: number;
+    description: string;
+    image: string;
+    category_id: number;
+}
+
+
+export default function DataTableDemo() {
+    const [sorting, setSorting] = React.useState<SortingState>([])
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+        []
+    )
+    const [columnVisibility, setColumnVisibility] =
+        React.useState<VisibilityState>({
+        image: false,
+
+        })
+    const [rowSelection, setRowSelection] = React.useState({})
 
     const router = useRouter()
     const { user, logout } = useAuth({ middleware: 'user' })
-    const [fruitData, setFruitData] = useState<any[]>([]);
-    const [selectedFile, setSelectedFile] = useState<File>();
-    const [fruit, setFruit] = useState({
+    const [fruitData, setFruitData] = React.useState<Fruit[]>([]);
+    const [selectedFile, setSelectedFile] = React.useState<File>();
+    const [fruit, setFruit] = React.useState({
         id: 0,
         name: '',
         stock: 0,
@@ -23,15 +69,125 @@ export default function FruitPage() {
     });
 
 
+    const columns: ColumnDef<Fruit>[] = [
+        {
+            accessorKey: "name",
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        name
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
+            cell: ({ row }) => (
+                
+                <div className="flex px-2 py-1">
+                <div>
+                    <img
+                        src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + row.getValue('image')}
+                        className="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-in-out h-9 w-9 rounded-xl"
+                        alt="user1"
+                    />
+                </div>
+                <div className="flex flex-col justify-center">
+                    <h6 className="mb-0 text-sm leading-normal dark:text-white">
+                        {row.getValue("name")}
+                    </h6>
+                    <p className="mb-0 text-xs leading-tight dark:text-white dark:opacity-80 text-slate-400">
+                    </p>
+                </div>
+            </div>
+            ),
+        },
+        {
+            accessorKey: "stock",
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        stock
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
+            cell: ({ row }) => <div className="lowercase">{row.getValue("stock")}</div>,
+        },
+        {
+            accessorKey: "price",
+            header: ({ column }) => {
+                return (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    >
+                        price
+                        <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                )
+            },
+            cell: ({ row }) => <div className="lowercase">{row.getValue("price")}</div>,
+        },
+        {
+            accessorKey: 'category_id',
+            header: 'Category',
+            cell: info => 'Buah Buahan',
+        },
+        {
+            accessorKey: 'image',
+            header: 'image',
+            cell: info => info.getValue(),
+        },
+        {
+            accessorKey: 'id',
+            header: 'Actions',
+            cell: info => (
+                <div>
+                    <button className="btn btn-warning text-white text-xs" onClick={() => editFruit(Number(info.getValue()))}>Edit</button>
+                    <button className="btn btn-danger text-xs ml-2" onClick={() => deleteFruit(Number(info.getValue()))}>Delete</button>
+                </div>
+            ),
+        }
+    ];
+
+    const table = useReactTable({
+        data: fruitData,
+        columns,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
+        state: {
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection,
+        },
+    })
+
+
+
+
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedFile(event.target.files?.[0])
     }
 
 
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFruit({ ...fruit, [name]: value });
     }
+
+
 
 
 
@@ -143,17 +299,18 @@ export default function FruitPage() {
 
         let fr = fruitData.find((f) => f.id === id);
         console.log(fr)
-        setFruit({
-            id: fr.id,
-            name: fr.name,
-            stock: fr.stock,
-            price: fr.price,
-            description: fr.description,
-            image: fr.image,
-            category_id: 1
-
-        });
-        showModal()
+        if (fr) {
+            setFruit({
+                id: fr.id,
+                name: fr.name,
+                stock: fr.stock,
+                price: fr.price,
+                description: fr.description,
+                image: fr.image,
+                category_id: 1
+            });
+            showModal()
+        }
     }
 
 
@@ -318,7 +475,7 @@ export default function FruitPage() {
         }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         console.log(`ini token ${localStorage.getItem('token')}`)
 
         if (localStorage.getItem('token') == null) {
@@ -346,138 +503,134 @@ export default function FruitPage() {
                     <div className="flex-none w-full max-w-full px-3">
                         <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                             <div className="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex justify-between">
-                                <h6 className="dark:text-white">Fruits Table</h6>
+                                <h6 className="dark:text-white">Management Buah</h6>
                                 <button className="btn btn-info text-white" onClick={() => showModalCreate()}>Create</button>
 
                             </div>
                             <div className="flex-auto px-0 pt-0 pb-2">
                                 <div className="p-5 overflow-x-auto">
-                                    <table className="items-center w-full mb-0 align-top border-collapse dark:border-white/40 text-slate-500">
-                                        <thead className="align-bottom">
-                                            <tr>
-                                                <th className="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                    Buah
-                                                </th>
-                                                <th className="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                    Stok
-                                                </th>
-                                                <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                    Harga
-                                                </th>
-                                                <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                    Kategori
-                                                </th>
-                                                <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                    Status
-                                                </th>
-                                                <th className="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap text-slate-400 opacity-70" />
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {fruitData.map((fruit, index) => (
-                                                <>
-                                                    <tr>
-                                                        <td className="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <div className="flex px-2 py-1">
-                                                                <div>
-                                                                    <img
-                                                                        src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image}
-                                                                        className="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-in-out h-9 w-9 rounded-xl"
-                                                                        alt="user1"
-                                                                    />
-                                                                </div>
-                                                                <div className="flex flex-col justify-center">
-                                                                    <h6 className="mb-0 text-sm leading-normal dark:text-white">
-                                                                        {fruit.name}
-                                                                    </h6>
-                                                                    <p className="mb-0 text-xs leading-tight dark:text-white dark:opacity-80 text-slate-400">
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td className="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <p className="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                {fruit.stock}
-                                                            </p>
+                                    <div className="flex items-end w-full py-4">
+                                        <Input
+                                            placeholder="Filter nama buah..."
+                                            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                                            onChange={(event) =>
+                                                table.getColumn("name")?.setFilterValue(event.target.value)
+                                            }
+                                            className="max-w-sm"
+                                        />
 
-                                                        </td>
-                                                        <td style={{ textAlign: 'center' }} className="p-2 text-align-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <p style={{ textAlign: 'center' }} className="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                                Rp. {fruit.price}
-                                                            </p>
-
-                                                        </td>
-                                                        <td className="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span className="bg-gradient-to-tl  px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-slate-400">
-                                                                Buah Buahan
-                                                            </span>
-                                                        </td>
-                                                        <td className="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <span className="bg-gradient-to-tl from-emerald-500 to-teal-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">
-                                                                Muncul
-                                                            </span>
-                                                        </td>
-                                                        <td className=" align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                            <button
-
-                                                                className="btn btn-warning text-white text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
-                                                                onClick={() => editFruit(fruit.id)}
-                                                            >
-
-                                                                Edit
-                                                            </button>
-                                                            <button
-                                                                onClick={() => deleteFruit(fruit.id)}
-
-                                                                className="ms-3 btn btn-danger text-xs font-semibold leading-tight dark:text-white dark:opacity-80 text-slate-400"
-                                                            >
-                                                                {" "}
-                                                                Delete{" "}
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </>
-                                            ))}
-
+                                    </div>
+                                    <div className="rounded-md border">
+                                        <Table>
+                                            <TableHeader>
+                                                {table.getHeaderGroups().map((headerGroup) => (
+                                                    <TableRow key={headerGroup.id}>
+                                                        {headerGroup.headers.map((header) => {
+                                                            return (
+                                                                <TableHead key={header.id}>
+                                                                    {header.isPlaceholder
+                                                                        ? null
+                                                                        : flexRender(
+                                                                            header.column.columnDef.header,
+                                                                            header.getContext()
+                                                                        )}
+                                                                </TableHead>
+                                                            )
+                                                        })}
+                                                    </TableRow>
+                                                ))}
+                                            </TableHeader>
+                                            <TableBody>
+                                                {table.getRowModel().rows?.length ? (
+                                                    table.getRowModel().rows.map((row) => (
+                                                        <TableRow
+                                                            key={row.id}
+                                                            data-state={row.getIsSelected() && "selected"}
+                                                        >
+                                                            {row.getVisibleCells().map((cell) => (
+                                                                <TableCell key={cell.id}>
+                                                                    {flexRender(
+                                                                        cell.column.columnDef.cell,
+                                                                        cell.getContext()
+                                                                    )}
+                                                                </TableCell>
+                                                            ))}
+                                                        </TableRow>
+                                                    ))
+                                                ) : (
+                                                    <TableRow>
+                                                        <TableCell
+                                                            colSpan={columns.length}
+                                                            className="h-24 text-center"
+                                                        >
+                                                            No results.
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                    <div className="flex items-center justify-end space-x-2 py-4">
+                                        <div className="flex-1 text-sm text-muted-foreground">
+                                            {table.getFilteredSelectedRowModel().rows.length} of{" "}
+                                            {table.getFilteredRowModel().rows.length} row(s) selected.
+                                        </div>
+                                        <div className="space-x-2">
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => table.previousPage()}
+                                                disabled={!table.getCanPreviousPage()}
+                                            >
+                                                Previous
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => table.nextPage()}
+                                                disabled={!table.getCanNextPage()}
+                                            >
+                                                Next
+                                            </Button>
+                                        </div>
+                                    </div>
 
 
 
-                                            {/* Open the modal using document.getElementById('ID').showModal() method */}
-                                            <dialog id="my_modal_1" className="modal">
-                                                <div className="modal-box">
-                                                    <h3 className="font-bold text-lg">Buat Data Buah</h3>
-                                                    <div className="modal-action">
-                                                        <form method="dialog" onSubmit={(fruit.id == 0) ? createFruit : updateFruit}>
 
-                                                            <input className="input input-bordered w-full mt-5 " value={fruit.name} type="text" name="name" placeholder="Name" onChange={handleInputChange} />
-                                                            <input className="input input-bordered w-full mt-5 " value={fruit.stock} type="text" name="stock" placeholder="Stock" onChange={handleInputChange} />
-                                                            <input className="input input-bordered w-full mt-5 " value={fruit.price} type="text" name="price" placeholder="Price" onChange={handleInputChange} />
-                                                            <input className="input input-bordered w-full mt-5 " value={fruit.description} type="text" name="description" placeholder="Description" onChange={handleInputChange} />
-                                                            {/* <input className="input input-bordered w-full mt-5 " value={fruit.category_id} type="text" name="category_id" placeholder="Category ID" onChange={handleInputChange} /> */}
-                                                            <input className="file-input input-bordered w-full mt-5 " type="file" onChange={handleFileSelect} />
+                                    {/* Open the modal using document.getElementById('ID').showModal() method */}
+                                    <dialog id="my_modal_1" className="modal">
+                                        <div className="modal-box">
+                                            <h3 className="font-bold text-lg">Buat Data Buah</h3>
+                                            <div className="modal-action">
+                                                <form method="dialog" onSubmit={(fruit.id == 0) ? createFruit : updateFruit}>
 
-                                                            <div className="mt-5 flex justify-end gap-3">
-                                                                <button className="btn" type="button" onClick={modalHide}>Close</button>
-                                                                {(fruit.id == 0) ? (
-                                                                    <button type="submit" className="btn">Create</button>
-                                                                ) : (
-                                                                    <button type="submit" className="btn">Update</button>
-                                                                )}
-                                                            </div>
-                                                        </form>
+                                                    <input className="input input-bordered w-full mt-5 " value={fruit.name} type="text" name="name" placeholder="Name" onChange={handleInputChange} />
+                                                    <input className="input input-bordered w-full mt-5 " value={fruit.stock} type="text" name="stock" placeholder="Stock" onChange={handleInputChange} />
+                                                    <input className="input input-bordered w-full mt-5 " value={fruit.price} type="text" name="price" placeholder="Price" onChange={handleInputChange} />
+                                                    <input className="input input-bordered w-full mt-5 " value={fruit.description} type="text" name="description" placeholder="Description" onChange={handleInputChange} />
+                                                    {/* <input className="input input-bordered w-full mt-5 " value={fruit.category_id} type="text" name="category_id" placeholder="Category ID" onChange={handleInputChange} /> */}
+                                                    <input className="file-input input-bordered w-full mt-5 " type="file" onChange={handleFileSelect} />
+
+                                                    <div className="mt-5 flex justify-end gap-3">
+                                                        <button className="btn" type="button" onClick={modalHide}>Close</button>
+                                                        {(fruit.id == 0) ? (
+                                                            <button type="submit" className="btn">Create</button>
+                                                        ) : (
+                                                            <button type="submit" className="btn">Update</button>
+                                                        )}
                                                     </div>
-                                                </div>
-                                            </dialog>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dialog>
 
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             ) : ""}
-
         </>
-    );
+    )
 }
