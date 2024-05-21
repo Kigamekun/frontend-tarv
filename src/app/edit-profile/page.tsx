@@ -81,6 +81,13 @@ const EditProfile = () => {
         })
             .then((response) => response.text())
             .then((result) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Profile berhasil diubah',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                getUserInfo()
             })
             .catch((error) => console.error(error));
     }
