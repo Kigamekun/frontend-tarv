@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { FaAppleWhole } from "react-icons/fa6";
 import { useAuth } from '@/lib/hooks/auth';
+import Swal from 'sweetalert2';
 
 const Sidebar = () => {
     // State untuk melacak halaman yang sedang aktif
@@ -14,6 +15,25 @@ const Sidebar = () => {
     const router = useRouter();
     const pathname = usePathname()
     const { user, logout } = useAuth({ middleware: 'user' })
+
+    const onClickLogout = () => {
+        Swal.fire({
+            title: "Anda yakin?",
+            text: "Anda akan logout!",
+            icon: "warning",
+            showCancelButton: true,
+            // confirmButtonColor: "#6A9944",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logout(); // Execute the logout function
+            } else {
+                Swal.fire("Cancelled", "Logout cancelled", "error");
+            }
+        });
+    };
 
     useEffect(() => {
         setActivePage(pathname || 'dashboard');
@@ -98,7 +118,7 @@ const Sidebar = () => {
                     <li className="mt-0.5 w-full cursor-pointer">
                         <div
                             className={`py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors dark:text-white dark:opacity-80}`}
-                            onClick={logout}
+                            onClick={onClickLogout}
                         >
                             <div className="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                                 <i className={`relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2`} />
