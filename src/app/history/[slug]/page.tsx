@@ -120,9 +120,9 @@ export default function Page({ params }: { params: { slug: string } }) {
                                     <div className="font-semibold ">No. Transaksi</div>
                                     <div>{transactionData?.kode_transaksi}</div>
                                     <div className="font-semibold mt-5">Waktu Pemesanan</div>
-                                    <div className="mt-5">{transactionData?.tanggal_transaksi }</div>
+                                    <div className="mt-5">{transactionData?.tanggal_transaksi.split(",")[0] }</div>
                                     <div className="font-semibold mt-5">Waktu Pembayaran</div>
-                                    <div className="mt-5" >{transactionData?.tanggal_transaksi }</div>
+                                    <div className="mt-5" >{transactionData?.tanggal_transaksi.split(",")[0] }</div>
                                     <div className="font-semibold mt-5">Metode Pembayaran</div>
                                     <div className="mt-5">{transactionData?.metode_pembayaran}</div>
                                     <div className="font-semibold mt-5">Total</div>
