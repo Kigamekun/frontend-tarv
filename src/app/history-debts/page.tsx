@@ -213,10 +213,10 @@ const History = () => {
                                                                 <div className="font-body text-2xl font-semibold" style={{ width: '80%' }}>{item.kode_transaksi}</div>
                                                                 <br />
                                                                 <div className="grid grid-rows-4 grid-cols-2 font-body text-gray-400">
-                                                                    <div>Tanggal Pesanan</div>
-                                                                    <div>
+                                                                    {/* <div>Tanggal Pesanan</div> */}
+                                                                    {/* <div> */}
                                                                         {/* {item.tanggal_transaksi} */}
-                                                                    </div>
+                                                                    {/* </div> */}
 
                                                                     <div>Jumlah Buah</div>
                                                                     <div>{item.items.length} buah</div>

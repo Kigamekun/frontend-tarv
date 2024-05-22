@@ -129,7 +129,7 @@ const History = () => {
                                                                 </div>
                                                                 <div className="flex flex-col font-body text-gray-400">
                                                                     <div className='flex justify-between'>
-                                                                        <div>Tanggal Pesanan</div>
+                                                                        {/* <div>Tanggal Pesanan</div> */}
                                                                         {/* <div>{item.tanggal_transaksi}</div> */}
                                                                     </div>
                                                                     <div className='flex justify-between'>
