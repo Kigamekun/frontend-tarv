@@ -190,57 +190,58 @@ export default function Home() {
                         <br />
                         <div
                             className="flex flex-wrap justify-between">
-                            { fruitData != undefined ? fruitData.map((fruit) => (
-                                <>
-                                    <div
-                                        style={{ border: "none !important" }}
-                                        className="flex flex-col w-1/2 bg-white rounded-lg :bg-gray-800 :border-gray-700"
-                                    >
-                                        <center>
-
+                            {fruitData !== undefined ? fruitData.map((fruit) => (
+                                fruit.stock > 0 && (
+                                    <>
+                                        <div
+                                            style={{ border: "none !important" }}
+                                            className="flex flex-col w-1/2 bg-white rounded-lg :bg-gray-800 :border-gray-700"
+                                            key={fruit.id}
+                                        >
+                                            <center>
+                                                <Link href={`/home/${fruit.id}`}>
+                                                    <div className="w-full relative aspect-square">
+                                                        <Image
+                                                            fill={true}
+                                                            className="rounded-lg p-2"
+                                                            style={{ borderRadius: "20px" }}
+                                                            src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image}
+                                                            alt="Picture of the author"
+                                                        />
+                                                    </div>
+                                                </Link>
+                                            </center>
                                             <Link href={`/home/${fruit.id}`}>
-
-                                                <div className="w-full relative aspect-square">
-                                                    <Image
-                                                        fill={true}
-                                                        className="rounded-lg p-2" style={{borderRadius: "20px"}}
-                                                        src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image}
-                                                        alt="Picture of the author"
-                                                    />
-                                                </div>
+                                                <h5 className="px-7 mt-5 mb-1 text-2xl font-bold tracking-tight text-gray-900 :text-white">
+                                                    {fruit.name}
+                                                </h5>
                                             </Link>
-
-                                        </center>
-                                        <Link href={`/home/${fruit.id}`}>
-                                            <h5 className="px-7 mt-5 mb-1 text-2xl font-bold tracking-tight text-gray-900 :text-white">
-                                                {fruit.name}
-                                            </h5>
-                                        </Link>
-                                        <p className="px-7 text-[#a2a2a2] mb-1">Stok : {fruit.stock}</p>
-                                        <p className="px-7 mb-3 font-normal text-gray-700 :text-gray-400">
-                                            {fruit.description}
-                                        </p>
-                                        <div className="flex mt-auto px-7 items-center" style={{ justifyContent: "space-between" }}>
-                                            <div>
-                                                <span>
-                                                    <h5 className="mb-1 text-sm lg:text-2xl font-bold tracking-tight text-gray-900 :text-white">
-                                                        Rp. {fruit.price} <span className="text-sm text-gray-500">/ kg</span>
-                                                    </h5>
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <button
-                                                    type="button" onClick={() => handleAddToCart(fruit)}
-                                                    className="text-white bg-[#DC1F26] focus:ring-4 focus:ring-blue-300 text-sm rounded px-2 py-1 lg:rounded-lg lg:text-lg lg:px-5 lg:py-2.5 lg:me-2 lg:mb-2"
-                                                >
-                                                    +
-                                                </button>
+                                            <p className="px-7 text-[#a2a2a2] mb-1">Stok : {fruit.stock}</p>
+                                            <p className="px-7 mb-3 font-normal text-gray-700 :text-gray-400">
+                                                {fruit.description}
+                                            </p>
+                                            <div className="flex mt-auto px-7 items-center" style={{ justifyContent: "space-between" }}>
+                                                <div>
+                                                    <span>
+                                                        <h5 className="mb-1 text-sm lg:text-2xl font-bold tracking-tight text-gray-900 :text-white">
+                                                            Rp. {fruit.price} <span className="text-sm text-gray-500">/ kg</span>
+                                                        </h5>
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <button
+                                                        type="button" onClick={() => handleAddToCart(fruit)}
+                                                        className="text-white bg-[#DC1F26] focus:ring-4 focus:ring-blue-300 text-sm rounded px-2 py-1 lg:rounded-lg lg:text-lg lg:px-5 lg:py-2.5 lg:me-2 lg:mb-2"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                </>
+                                    </>
+                                )
                             )) : <div className="text-center">Tidak Ada data</div>}
+
 
                         </div>
                     </div>

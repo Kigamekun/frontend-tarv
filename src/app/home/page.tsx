@@ -172,14 +172,14 @@ export default function Home() {
                             <div>
                                 <div className="mt-1 ps-2">
                                     <center>
-                                    <Link href={'/cart'}>
-                                        <button
-                                            type="button"
-                                            className="focus:outline-none text-white bg-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-6 py-5 mb-2 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
-                                        >
-                                        <FaCartShopping className="w-6 h-5" />
-                                        </button>
-                                    </Link>
+                                        <Link href={'/cart'}>
+                                            <button
+                                                type="button"
+                                                className="focus:outline-none text-white bg-[#DC1F26] focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-6 py-5 mb-2 :bg-red-600 :hover:bg-red-700 :focus:ring-red-900"
+                                            >
+                                                <FaCartShopping className="w-6 h-5" />
+                                            </button>
+                                        </Link>
                                     </center>
                                 </div>
                             </div>
@@ -213,27 +213,25 @@ export default function Home() {
                         </div> */}
                         <br />
                         <div
-                        className="flex flex-wrap justify-between">
-                            { fruitData != undefined ? fruitData.map((fruit) => (
-                                <>
+                            className="flex flex-wrap justify-between">
+                            {fruitData !== undefined ? fruitData.map((fruit) => (
+                                fruit.stock > 0 && (
                                     <div
                                         style={{ border: "none !important" }}
                                         className="flex flex-col w-1/2 bg-white rounded-lg :bg-gray-800 :border-gray-700"
+                                        key={fruit.id}
                                     >
                                         <center>
-
                                             <Link href={`/home/${fruit.id}`}>
-
                                                 <div className="w-full relative aspect-square">
                                                     <Image
                                                         fill={true}
-                                                        className="rounded p-2" style={{borderRadius: "20px"}}
+                                                        className="rounded p-2" style={{ borderRadius: "20px" }}
                                                         src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image}
                                                         alt="Picture of the author"
                                                     />
                                                 </div>
                                             </Link>
-
                                         </center>
                                         <Link href={`/home/${fruit.id}`}>
                                             <h5 className="px-7 mt-5 mb-1 text-2xl font-bold tracking-tight text-gray-900 :text-white">
@@ -262,9 +260,9 @@ export default function Home() {
                                             </div>
                                         </div>
                                     </div>
-
-                                </>
+                                )
                             )) : <div className="text-center">Tidak Ada data</div>}
+
 
                         </div>
                     </div>
