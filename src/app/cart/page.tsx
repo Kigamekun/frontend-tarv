@@ -27,7 +27,9 @@ interface RootState {
 }
 
 const Cart = () => {
-    const [username, setUsername] = useState<string>('qris');
+    const [fruitData, setFruitData] = useState<any>({});
+
+    const [username, setUsername] = useState<string>('user');
 
     const cartItems = useSelector((state: RootState) => state.cart);
     const dispatch = useDispatch();
@@ -52,7 +54,7 @@ const Cart = () => {
         setCartData({
             totalItems: totalItems,
             totalPrice: totalPrice,
-        })
+        }) 
 
         if (!isClient) {
             Swal.fire({
@@ -68,9 +70,31 @@ const Cart = () => {
         }
     }, [cartItems, isClient])
 
-    const handleIncreaseQuantity = (id: number) => {
-        dispatch(incrementQuantity(id));
+    const handleIncreaseQuantity = async (id: number) => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits/${id}`);
+            if (!response.ok) {
+                throw new Error("Failed to fetch fruit data");
+            }
+            const data = await response.json();
+            const dt = data.data;
+            setFruitData(dt);
+            if (dt[0].stock < cartItems.find((item : any) => item.id === id).quantity + 1) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Stok tidak mencukupi',
+                    text: 'Jumlah yang diminta melebihi stok buah.',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                return;
+            }
+            dispatch(incrementQuantity(id));
+        } catch (error) {
+            console.error("Error fetching fruit data:", error);
+        }
     }
+
 
     const handleDecreaseQuantity = (id: number) => {
         if (cartItems.find((item: { id: number; }) => item.id === id).quantity === 1) {

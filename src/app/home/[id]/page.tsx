@@ -52,7 +52,19 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const handleAddToCart = () => {
     const existingItem = cartItems.find((item) => item.id === fruitData[0].id);
-
+    const totalQuantity = existingItem ? existingItem.quantity + quantity : quantity;
+  
+    if (totalQuantity > fruitData[0].stock) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Stok tidak mencukupi',
+        text: 'Jumlah yang diminta melebihi stok buah.',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return; // Stop execution if quantity exceeds stock
+    }
+  
     if (existingItem) {
       dispatch(incrementQuantity(fruitData[0].id));
     } else {
@@ -64,7 +76,7 @@ export default function Page({ params }: { params: { id: string } }) {
         price: fruitData[0].price,
       }));
     }
-
+  
     Swal.fire({
       icon: 'success',
       title: 'Berhasil ditaruh di keranjang',
@@ -74,12 +86,25 @@ export default function Page({ params }: { params: { id: string } }) {
   };
 
   const increaseQuantity = () => {
-    setQuantity(quantity + 1);
+    const totalQuantity = quantity + 1;
+  
+    if (totalQuantity > fruitData[0].stock) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Stok tidak mencukupi',
+        text: 'Jumlah yang diminta melebihi stok buah.',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return; // Stop execution if quantity exceeds stock
+    }
+  
+    setQuantity(totalQuantity);
     if (cartItems.some((item) => item.id === fruitData[0].id)) {
       dispatch(incrementQuantity(fruitData[0].id));
     }
   };
-
+  
   const decreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
