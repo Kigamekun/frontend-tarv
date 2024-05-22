@@ -133,7 +133,7 @@ const History = () => {
                                                                         <div>{item.tanggal_transaksi}</div>
                                                                     </div>
                                                                     <div className='flex justify-between'>
-                                                                        <div>Jumlah</div>
+                                                                        <div>Jumlah Buah</div>
                                                                         <div>{item.items.length} buah</div>
                                                                     </div>
                                                                     <div className='flex justify-between'>

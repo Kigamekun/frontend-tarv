@@ -216,7 +216,7 @@ const History = () => {
                                                                     <div>Tanggal Pesanan</div>
                                                                     <div>{item.tanggal_transaksi}</div>
 
-                                                                    <div>Jumlah</div>
+                                                                    <div>Jumlah Buah</div>
                                                                     <div>{item.items.length} buah</div>
 
                                                                     <div>Harga Total</div>
