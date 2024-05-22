@@ -271,6 +271,7 @@ export default function DataTableDemo() {
                     category_id: 0
                 })
                 e.target.reset();
+                Swal.close()
 
                 // close modal
                 const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
@@ -379,6 +380,7 @@ export default function DataTableDemo() {
                     category_id: 0
                 })
                 e.target.reset();
+                Swal.close()
 
                 // close modal
                 const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
@@ -432,10 +434,8 @@ export default function DataTableDemo() {
         )
             .then(function (response) {
                 getFruitData();
-                const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
-                if (modal) {
-                    modal.showModal();
-                }
+                Swal.close()
+                
             }).catch(function (error) {
                 if (error.response && error.response.status === 401) {
                     Swal.fire({
