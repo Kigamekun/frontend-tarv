@@ -44,6 +44,25 @@ const History = () => {
 
     const { user, logout } = useAuth({ middleware: 'user' })
 
+    const onClickLogout = () => {
+        Swal.fire({
+            title: "Anda yakin?",
+            text: "Anda akan logout!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#6A9944",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logout(); // Execute the logout function
+            } else {
+                Swal.fire("Cancelled", "Logout cancelled", "error");
+            }
+        });
+    };
+
     const getUserInfo = async () => {
         var res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/me`, {
             headers: {
@@ -170,7 +189,7 @@ const History = () => {
                                                         <a href="edit-profile">Edit Data</a>
                                                     </button>
                                                 </Link>
-                                                <button className="w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" onClick={ logout }>
+                                                <button className="w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" onClick={ onClickLogout }>
                                                     Log Out
                                                 </button>
                                             </div>
