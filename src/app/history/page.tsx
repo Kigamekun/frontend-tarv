@@ -130,7 +130,7 @@ const History = () => {
                                                                 <div className="flex flex-col font-body text-gray-400">
                                                                     <div className='flex justify-between'>
                                                                         <div>Tanggal Pesanan</div>
-                                                                        <div>{item.tanggal_transaksi.split(",")[0]}</div>
+                                                                        <div>{item.tanggal_transaksi.split(',').slice(0, 2).join(',')}</div>
                                                                     </div>
                                                                     <div className='flex justify-between'>
                                                                         <div>Jumlah</div>

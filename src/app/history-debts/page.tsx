@@ -215,7 +215,7 @@ const History = () => {
                                                                 <div className="grid grid-rows-4 grid-cols-2 font-body text-gray-400">
                                                                     <div>Tanggal Pesanan</div>
                                                                     <div>
-                                                                        {item.tanggal_transaksi.split(",")[0]}
+                                                                        {item.tanggal_transaksi.split(',').slice(0, 2).join(',')}
                                                                         </div>
 
                                                                     <div>Jumlah</div>
