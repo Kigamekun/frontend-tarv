@@ -95,7 +95,7 @@ const Sidebar = () => {
                         setBreadcrumb={setBreadcrumb}
 
                     />
-                    <li className="mt-0.5 w-full">
+                    <li className="mt-0.5 w-full cursor-pointer">
                         <div
                             className={`py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold transition-colors dark:text-white dark:opacity-80}`}
                             onClick={logout}
