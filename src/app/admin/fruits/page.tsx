@@ -228,6 +228,16 @@ export default function DataTableDemo() {
     const createFruit = async (e: any) => {
         e.preventDefault();
 
+        Swal.fire({
+            title: 'Loading...',
+            target: document.getElementById('my_modal_1'),
+            text: 'Mohon tunggu sebentar...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         var bodyFormData = new FormData();
         console.log(selectedFile);
         if (selectedFile) {
@@ -318,6 +328,15 @@ export default function DataTableDemo() {
 
 
         e.preventDefault();
+        Swal.fire({
+            title: 'Loading...',
+            target: document.getElementById('my_modal_1'),
+            text: 'Mohon tunggu sebentar...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
         var bodyFormData = new FormData();
         console.log(selectedFile);
 
@@ -392,6 +411,17 @@ export default function DataTableDemo() {
 
 
     const deleteFruit = async (id: number) => {
+
+        Swal.fire({
+            title: 'Loading...',
+            target: document.getElementById('my_modal_1'),
+            text: 'Mohon tunggu sebentar...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         var res = await axios.delete(
             `${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits/delete/${id}`,
             {
@@ -402,6 +432,10 @@ export default function DataTableDemo() {
         )
             .then(function (response) {
                 getFruitData();
+                const modal = document.getElementById('my_modal_1') as HTMLDialogElement;
+                if (modal) {
+                    modal.showModal();
+                }
             }).catch(function (error) {
                 if (error.response && error.response.status === 401) {
                     Swal.fire({
