@@ -411,51 +411,93 @@ export default function DataTableDemo() {
             })
     }
 
-
     const deleteFruit = async (id: number) => {
-
         Swal.fire({
-            title: 'Loading...',
-            target: document.getElementById('my_modal_1'),
-            text: 'Mohon tunggu sebentar...',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Loading...',
+                    text: 'Mohon tunggu sebentar...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+    
+                try {
+                    await axios.delete(
+                        `${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits/delete/${id}`,
+                        {
+                            headers: {
+                                "Authorization": `Bearer ${localStorage.getItem('token')}`
+                            }
+                        }
+                    );
+                    await getFruitData();
+                    Swal.fire(
+                        'Deleted!',
+                        'Your fruit has been deleted.',
+                        'success'
+                    );
+                } catch (error) {
+                    
+                }
             }
         });
+    };
+    
 
-        var res = await axios.delete(
-            `${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits/delete/${id}`,
-            {
-                headers: {
-                    "Authorization": `Bearer ${localStorage.getItem('token')}`
-                }
-            }
-        )
-            .then(function (response) {
-                getFruitData();
-                Swal.close()
+    // const deleteFruit = async (id: number) => {
+
+    //     Swal.fire({
+    //         title: 'Loading...',
+    //         target: document.getElementById('my_modal_1'),
+    //         text: 'Mohon tunggu sebentar...',
+    //         allowOutsideClick: false,
+    //         didOpen: () => {
+    //             Swal.showLoading();
+    //         }
+    //     });
+
+    //     var res = await axios.delete(
+    //         `${process.env.NEXT_PUBLIC_BACKEND_HOST}/fruits/delete/${id}`,
+    //         {
+    //             headers: {
+    //                 "Authorization": `Bearer ${localStorage.getItem('token')}`
+    //             }
+    //         }
+    //     )
+    //         .then(function (response) {
+    //             getFruitData();
+    //             Swal.close()
                 
-            }).catch(function (error) {
-                if (error.response && error.response.status === 401) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: error.response.data.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    logout()
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'error terjadi',
-                        text: 'mohon coba lagi nanti.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
-    }
+    //         }).catch(function (error) {
+    //             if (error.response && error.response.status === 401) {
+    //                 Swal.fire({
+    //                     icon: 'error',
+    //                     title: error.response.data.message,
+    //                     showConfirmButton: false,
+    //                     timer: 1500
+    //                 })
+    //                 logout()
+    //             } else {
+    //                 Swal.fire({
+    //                     icon: 'error',
+    //                     title: 'error terjadi',
+    //                     text: 'mohon coba lagi nanti.',
+    //                     showConfirmButton: false,
+    //                     timer: 1500
+    //                 });
+    //             }
+    //         })
+    // }
 
     const getUserInfo = async () => {
         var res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/me`, {
