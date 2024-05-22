@@ -103,20 +103,23 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }: AuthHookOptions
                 (loadingSwal as any).close();
                 const loggedInUser: User = { token };
                 mutate(loggedInUser);
-                handleRedirect();
+                handleRedirect();                
 
             }).catch(function (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Login',
+                    text: 'Password yang anda masukkan salah!'
+                });
+
             });
 
         } catch (error) {
-            if ((error as any).response.status !== 422) throw error;
             Swal.fire({
                 icon: 'error',
-                title: 'Credential is wrong',
-                showConfirmButton: false,
-                timer: 1500
+                title: 'Gagal Login',
+                text: 'Password yang anda masukkan salah!'
             });
-            setErrors((error as any).response.data.errors);
         }
     };
 
