@@ -213,12 +213,12 @@ export default function Home() {
                         </div> */}
                         <br />
                         <div
-                            className="flex flex-wrap justify-between">
+                            className="grid grid-cols-2 gap-3 justify-between">
                             {fruitData !== undefined ? fruitData.map((fruit) => (
                                 fruit.stock > 0 && (
                                     <div
                                         style={{ border: "none !important" }}
-                                        className="flex flex-col w-1/2 bg-white rounded-lg :bg-gray-800 :border-gray-700"
+                                        className="flex flex-col bg-white rounded-lg :bg-gray-800 :border-gray-700"
                                         key={fruit.id}
                                     >
                                         <center>
@@ -226,7 +226,7 @@ export default function Home() {
                                                 <div className="w-full relative aspect-square">
                                                     <Image
                                                         fill={true}
-                                                        className="rounded p-2" style={{ borderRadius: "20px" }}
+                                                        className="rounded" style={{ borderRadius: "20px" }}
                                                         src={process.env.NEXT_PUBLIC_ASSETS_HOST + '/' + fruit.image}
                                                         alt="Picture of the author"
                                                     />
@@ -234,15 +234,15 @@ export default function Home() {
                                             </Link>
                                         </center>
                                         <Link href={`/home/${fruit.id}`}>
-                                            <h5 className="px-7 mt-5 mb-1 text-2xl font-bold tracking-tight text-gray-900 :text-white">
+                                            <h5 className="px-4 mt-5 mb-1 text-2xl font-bold tracking-tight text-gray-900 :text-white">
                                                 {fruit.name}
                                             </h5>
                                         </Link>
-                                        <p className="px-7 text-[#a2a2a2] mb-1">Stok : {fruit.stock}</p>
-                                        <p className="px-7 mb-3 font-normal text-gray-700 :text-gray-400">
+                                        <p className="px-4 text-[#a2a2a2] mb-1">Stok : {fruit.stock}</p>
+                                        <p className="px-4 mb-3 font-normal text-gray-700 :text-gray-400">
                                             {fruit.description}
                                         </p>
-                                        <div className="flex mt-auto px-7 items-center" style={{ justifyContent: "space-between" }}>
+                                        <div className="flex mt-auto px-4 items-center" style={{ justifyContent: "space-between" }}>
                                             <div>
                                                 <span>
                                                     <h5 className="mb-1 text-sm lg:text-2xl font-bold tracking-tight text-gray-900 :text-white">
